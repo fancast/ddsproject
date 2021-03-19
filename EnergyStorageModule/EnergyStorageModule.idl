@@ -1,0 +1,16 @@
+/*
+ * Distributed under the OpenDDS License.
+ * See: http://www.opendds.org/license.html
+ */
+
+module EnergyStorageModule {
+
+  @topic
+  struct EnergySignal {
+    string from;
+    string subject;
+    @key long subject_id;
+    string text;
+    long count;
+  };
+};
