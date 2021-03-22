@@ -65,14 +65,12 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
     std::cout << "SampleInfo.instance_state = " << info.instance_state << std::endl;
 
     if (info.valid_data) {
-      std::cout //<< "EsmSignal: power_interface  = " << esm_signal.power_interface.in() << std::endl
-                << "           signal_id        = " << esm_signal.signal_id << std::endl
-                //<< "           control_word     = " << esm_signal.control_word.in() << std::endl
-                //<< "           status           = " << esm_signal.status.in() << std::endl
-		        //<< "           terminal_voltage = " << esm_signal.terminal_voltage << std::endl
-		        //<< "           terminal_current = " << esm_signal.terminal_current << std::endl
-		        //<< "           state_of_charge  = " << esm_signal.state_of_charge << std::endl
-                << "           count            = " << esm_signal.count << std::endl;
+      std::cout << "EsmSignal: subject    = " << esm_signal.subject.in() << std::endl
+                << "         subject_id = " << esm_signal.subject_id   << std::endl
+                << "         from       = " << esm_signal.from.in()    << std::endl
+		        << "         status     = " << esm_signal.status.in()  << std::endl
+                << "         count      = " << esm_signal.count        << std::endl
+                << "         text       = " << esm_signal.text.in()    << std::endl;
 
     }
 

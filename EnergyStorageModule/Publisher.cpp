@@ -143,22 +143,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Write samples
     EnergyStorageModule::EsmSignal esm_signal;
-	esm_signal.signal_id = 70;
+    esm_signal.subject_id = 99;
 
-	//esm_signal.power_interface = "P1";
-	//esm_signal.control_word = "start";
-	//esm_signl.status = "on";
-	//esm_signal.terminal_voltage = 17;
-	//esm_signal.terminal_current = 2;
-	//esm_signal.state_of_charge = 1;
-	esm_signal.count = 0;
+    esm_signal.from       = "Comic Book Guy";
+    esm_signal.subject    = "Review";
+	esm_signal.status     = "on";
+    esm_signal.text       = "Worst. Movie. Ever.";
+    esm_signal.count      = 0;
 
     for (int i = 0; i < 10; ++i) {
       DDS::ReturnCode_t error = esm_signal_writer->write(esm_signal, DDS::HANDLE_NIL);
       ++esm_signal.count;
-	  ++esm_signal.signal_id;
-	  ++esm_signal.terminal_voltage;
-	  ++esm_signal.terminal_current;
+      ++esm_signal.subject_id;
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,

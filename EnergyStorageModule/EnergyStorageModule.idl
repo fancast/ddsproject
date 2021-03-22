@@ -7,13 +7,11 @@ module EnergyStorageModule {
 
   @topic
   struct EsmSignal {
-    //string power_interface;
-    //string control_word;
-    @key long signal_id;
-    //string status;
-	//long terminal_voltage;
+    string from;
+    string subject;
+	string status;
+    @key long subject_id;
+    string text;
     long count;
-	//long terminal_current;
-	//long state_of_charge;
   };
 };
