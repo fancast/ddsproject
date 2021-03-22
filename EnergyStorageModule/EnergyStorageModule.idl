@@ -1,0 +1,17 @@
+/*
+ * Distributed under the OpenDDS License.
+ * See: http://www.opendds.org/license.html
+ */
+
+module EnergyStorageModule {
+
+  @topic
+  struct EsmSignal {
+    string subject;
+	string status;
+	long terminal_voltage;
+    @key long signal_id;
+    string text;
+    long count;
+  };
+};
