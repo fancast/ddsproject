@@ -1,0 +1,13 @@
+/*
+ * Distributed under the OpenDDS License.
+ * See: http://www.opendds.org/license.html
+ */
+
+module EnergyStorageModule {
+
+  @topic
+  struct EsmSignal {
+	@key string power_interface;
+	string control_word;
+  };
+};
