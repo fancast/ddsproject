@@ -143,13 +143,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ws->detach_condition(condition);
 
     // Write samples
-	int *p = reinterpret_cast<int *>(0x92b01000);
     EnergyStorageModule::EsmSignal esm_signal;
 
 	esm_signal.power_interface = "P1";
 	esm_signal.control_word = "start";
 	esm_signal.status     = "on";
-	esm_signal.terminal_voltage = *p;
+	esm_signal.terminal_voltage = 7;
 	esm_signal.voltage_unit = "kV";
 	esm_signal.terminal_current = 1.5;
 	esm_signal.current_unit = "kA";
