@@ -9,7 +9,7 @@ module ToEnergyStorageModule {
   struct ToEsmSignal {
 	@key string power_interface;
 	string control_word;
-	int pointer;
+	long pointer;
 	string timestamp;
   };
 };
