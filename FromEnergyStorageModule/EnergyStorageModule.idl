@@ -10,7 +10,7 @@ module EnergyStorageModule {
 	@key string power_interface;
 	string control_word;
 	string status;
-	float terminal_voltage;
+	int terminal_voltage;
 	string voltage_unit;
 	float terminal_current;
 	string current_unit;
