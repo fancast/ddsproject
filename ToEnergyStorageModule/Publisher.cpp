@@ -144,7 +144,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Write samples
     ToEnergyStorageModule::ToEsmSignal to_esm_signal;
-	int *p = reinterpret_cast<int *>(0x92b01000);
+	int32_t *p = reinterpret_cast<int32_t *>(0x92b01000);
 
 	to_esm_signal.power_interface = "P1";
 	to_esm_signal.control_word = "start";
