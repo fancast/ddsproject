@@ -143,7 +143,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ws->detach_condition(condition);
 
     // Write samples
-	float *p = 0x92b01000;
+	float *p = (int *)0x92b01000;
     EnergyStorageModule::EsmSignal esm_signal;
 
 	esm_signal.power_interface = "P1";
