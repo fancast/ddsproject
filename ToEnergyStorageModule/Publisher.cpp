@@ -148,7 +148,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 	to_esm_signal.power_interface = "P1";
 	to_esm_signal.control_word = "start";
-	to_esm_signal.pointer = *p;
+	to_esm_signal.pointer = p[0];
 
 	time_t current_time;
 	time(&current_time);
