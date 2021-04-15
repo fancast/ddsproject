@@ -45,8 +45,8 @@ DataReaderListenerImpl::on_liveliness_changed(
 void
 DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
 {
-  ToEnergyStorageModule::ToEsmSignalDataReader_var reader_i =
-    ToEnergyStorageModule::ToEsmSignalDataReader::_narrow(reader);
+  ToEnergyStorageModule::ToEsmSignalsDataReader_var reader_i =
+    ToEnergyStorageModule::ToEsmSignalsDataReader::_narrow(reader);
 
   if (!reader_i) {
     ACE_ERROR((LM_ERROR,
@@ -55,19 +55,19 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
     ACE_OS::exit(1);
   }
 
-  ToEnergyStorageModule::ToEsmSignal to_esm_signal;
+  ToEnergyStorageModule::ToEsmSignals to_esm_signals;
   DDS::SampleInfo info;
 
-  DDS::ReturnCode_t error = reader_i->take_next_sample(to_esm_signal, info);
+  DDS::ReturnCode_t error = reader_i->take_next_sample(to_esm_signals, info);
 
   if (error == DDS::RETCODE_OK) {
     std::cout << "SampleInfo.sample_rank = " << info.sample_rank << std::endl;
     std::cout << "SampleInfo.instance_state = " << info.instance_state << std::endl;
 
     if (info.valid_data) {
-		std::cout << "         power_interface  = " << to_esm_signal.power_interface.in() << std::endl
-			<< "         control_word     = " << to_esm_signal.control_word.in() << std::endl
-			<< "         timestamp        = " << to_esm_signal.timestamp.in() << std::endl;
+		std::cout << "         power_interface  = " << to_esm_signals.power_interface.in() << std::endl
+			<< "         control_word     = " << to_esm_signals.control_word.in() << std::endl
+			<< "         timestamp        = " << to_esm_signals.timestamp.in() << std::endl;
 
     }
 

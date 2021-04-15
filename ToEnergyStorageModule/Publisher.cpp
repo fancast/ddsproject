@@ -46,9 +46,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    // Register TypeSupport (ToEnergyStorageModule::ToEsmSignal)
-    ToEnergyStorageModule::ToEsmSignalTypeSupport_var ts =
-      new ToEnergyStorageModule::ToEsmSignalTypeSupportImpl;
+    // Register TypeSupport (ToEnergyStorageModule::ToEsmSignals)
+    ToEnergyStorageModule::ToEsmSignalsTypeSupport_var ts =
+      new ToEnergyStorageModule::ToEsmSignalsTypeSupportImpl;
 
     if (ts->register_type(participant, "") != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
@@ -100,10 +100,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    ToEnergyStorageModule::ToEsmSignalDataWriter_var to_esm_signal_writer =
-      ToEnergyStorageModule::ToEsmSignalDataWriter::_narrow(writer);
+    ToEnergyStorageModule::ToEsmSignalsDataWriter_var to_esm_signals_writer =
+      ToEnergyStorageModule::ToEsmSignalsDataWriter::_narrow(writer);
 
-    if (!to_esm_signal_writer) {
+    if (!to_esm_signals_writer) {
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT("ERROR: %N:%l: main() -")
                         ACE_TEXT(" _narrow failed!\n")),
@@ -143,17 +143,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ws->detach_condition(condition);
 
     // Write samples
-    ToEnergyStorageModule::ToEsmSignal to_esm_signal;
+    ToEnergyStorageModule::ToEsmSignals to_esm_signals;
 
-	to_esm_signal.power_interface = "P1";
-	to_esm_signal.control_word = "start";
+	to_esm_signals.power_interface = "P1";
+	to_esm_signals.control_word = "start";
 
 	time_t current_time;
 	time(&current_time);
-	to_esm_signal.timestamp = asctime(localtime(&current_time));
+	to_esm_signals.timestamp = asctime(localtime(&current_time));
 
     for (int i = 0; i < 10; ++i) {
-      DDS::ReturnCode_t error = to_esm_signal_writer->write(to_esm_signal, DDS::HANDLE_NIL);
+      DDS::ReturnCode_t error = to_esm_signals_writer->write(to_esm_signals, DDS::HANDLE_NIL);
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
@@ -164,7 +164,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Wait for samples to be acknowledged
     DDS::Duration_t timeout = { 30, 0 };
-    if (to_esm_signal_writer->wait_for_acknowledgments(timeout) != DDS::RETCODE_OK) {
+    if (to_esm_signals_writer->wait_for_acknowledgments(timeout) != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT("ERROR: %N:%l: main() -")
                         ACE_TEXT(" wait_for_acknowledgments failed!\n")),

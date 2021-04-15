@@ -6,7 +6,7 @@
 module ToEnergyStorageModule {
 
   @topic
-  struct ToEsmSignal {
+  struct ToEsmSignals {
 	@key string power_interface;
 	string control_word;
 	string timestamp;
