@@ -46,9 +46,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    // Register TypeSupport (EnergyStorageModule::EsmSignal)
-    EnergyStorageModule::EsmSignalTypeSupport_var ts =
-      new EnergyStorageModule::EsmSignalTypeSupportImpl;
+    // Register TypeSupport (EnergyStorageModule::EsmSignals)
+    EnergyStorageModule::EsmSignalsTypeSupport_var ts =
+      new EnergyStorageModule::EsmSignalsTypeSupportImpl;
 
     if (ts->register_type(participant, "") != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
@@ -100,10 +100,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    EnergyStorageModule::EsmSignalDataWriter_var esm_signal_writer =
-      EnergyStorageModule::EsmSignalDataWriter::_narrow(writer);
+    EnergyStorageModule::EsmSignalsDataWriter_var esm_signals_writer =
+      EnergyStorageModule::EsmSignalsDataWriter::_narrow(writer);
 
-    if (!esm_signal_writer) {
+    if (!esm_signals_writer) {
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT("ERROR: %N:%l: main() -")
                         ACE_TEXT(" _narrow failed!\n")),
@@ -143,26 +143,26 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ws->detach_condition(condition);
 
     // Write samples
-    EnergyStorageModule::EsmSignal esm_signal;
+    EnergyStorageModule::EsmSignals esm_signals;
 
-	esm_signal.power_interface = "P1";
-	esm_signal.control_word = "start";
-	esm_signal.status     = "on";
-	esm_signal.terminal_voltage = 7;
-	esm_signal.voltage_unit = "kV";
-	esm_signal.terminal_current = 1.5;
-	esm_signal.current_unit = "kA";
-	esm_signal.state_of_charge = 50;
-	esm_signal.soc_unit = "pu";
+	esm_signals.power_interface = "P1";
+	esm_signals.control_word = "start";
+	esm_signals.status     = "on";
+	esm_signals.terminal_voltage = 7;
+	esm_signals.voltage_unit = "kV";
+	esm_signals.terminal_current = 1.5;
+	esm_signals.current_unit = "kA";
+	esm_signals.state_of_charge = 50;
+	esm_signals.soc_unit = "pu";
 
 	time_t current_time;
 	time(&current_time);
-	esm_signal.timestamp = asctime(localtime(&current_time));
+	esm_signals.timestamp = asctime(localtime(&current_time));
 
     for (int i = 0; i < 10; ++i) {
-      DDS::ReturnCode_t error = esm_signal_writer->write(esm_signal, DDS::HANDLE_NIL);
-	  //++esm_signal.terminal_voltage;
-	  ++esm_signal.terminal_current;
+      DDS::ReturnCode_t error = esm_signals_writer->write(esm_signals, DDS::HANDLE_NIL);
+	  //++esm_signals.terminal_voltage;
+	  ++esm_signals.terminal_current;
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
@@ -173,7 +173,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Wait for samples to be acknowledged
     DDS::Duration_t timeout = { 30, 0 };
-    if (esm_signal_writer->wait_for_acknowledgments(timeout) != DDS::RETCODE_OK) {
+    if (esm_signals_writer->wait_for_acknowledgments(timeout) != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT("ERROR: %N:%l: main() -")
                         ACE_TEXT(" wait_for_acknowledgments failed!\n")),

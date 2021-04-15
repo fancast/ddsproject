@@ -46,9 +46,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    // Register Type (EnergyStorageModule::EsmSignal)
-    EnergyStorageModule::EsmSignalTypeSupport_var ts =
-      new EnergyStorageModule::EsmSignalTypeSupportImpl;
+    // Register Type (EnergyStorageModule::EsmSignals)
+    EnergyStorageModule::EsmSignalsTypeSupport_var ts =
+      new EnergyStorageModule::EsmSignalsTypeSupportImpl;
 
     if (ts->register_type(participant, "") != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
@@ -106,8 +106,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    EnergyStorageModule::EsmSignalDataReader_var reader_i =
-      EnergyStorageModule::EsmSignalDataReader::_narrow(reader);
+    EnergyStorageModule::EsmSignalsDataReader_var reader_i =
+      EnergyStorageModule::EsmSignalsDataReader::_narrow(reader);
 
     if (!reader_i) {
       ACE_ERROR_RETURN((LM_ERROR,

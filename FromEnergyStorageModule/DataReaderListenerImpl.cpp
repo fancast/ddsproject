@@ -45,8 +45,8 @@ DataReaderListenerImpl::on_liveliness_changed(
 void
 DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
 {
-  EnergyStorageModule::EsmSignalDataReader_var reader_i =
-    EnergyStorageModule::EsmSignalDataReader::_narrow(reader);
+  EnergyStorageModule::EsmSignalsDataReader_var reader_i =
+    EnergyStorageModule::EsmSignalsDataReader::_narrow(reader);
 
   if (!reader_i) {
     ACE_ERROR((LM_ERROR,
@@ -55,26 +55,26 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
     ACE_OS::exit(1);
   }
 
-  EnergyStorageModule::EsmSignal esm_signal;
+  EnergyStorageModule::EsmSignals esm_signals;
   DDS::SampleInfo info;
 
-  DDS::ReturnCode_t error = reader_i->take_next_sample(esm_signal, info);
+  DDS::ReturnCode_t error = reader_i->take_next_sample(esm_signals, info);
 
   if (error == DDS::RETCODE_OK) {
     std::cout << "SampleInfo.sample_rank = " << info.sample_rank << std::endl;
     std::cout << "SampleInfo.instance_state = " << info.instance_state << std::endl;
 
     if (info.valid_data) {
-		std::cout << "         power_interface  = " << esm_signal.power_interface.in() << std::endl
-			<< "         control_word     = " << esm_signal.control_word.in() << std::endl
-			<< "         status           = " << esm_signal.status.in() << std::endl
-			<< "         terminal_voltage = " << esm_signal.terminal_voltage << std::endl
-			<< "         voltage_unit     = " << esm_signal.voltage_unit.in() << std::endl
-			<< "         terminal_current = " << esm_signal.terminal_current << std::endl
-			<< "         current_unit     = " << esm_signal.current_unit.in() << std::endl
-			<< "         state_of_charge  = " << esm_signal.state_of_charge << std::endl
-			<< "         soc_unit         = " << esm_signal.soc_unit.in() << std::endl
-			<< "         timestamp        = " << esm_signal.timestamp.in() << std::endl;
+		std::cout << "         power_interface  = " << esm_signals.power_interface.in() << std::endl
+			<< "         control_word     = " << esm_signals.control_word.in() << std::endl
+			<< "         status           = " << esm_signals.status.in() << std::endl
+			<< "         terminal_voltage = " << esm_signals.terminal_voltage << std::endl
+			<< "         voltage_unit     = " << esm_signals.voltage_unit.in() << std::endl
+			<< "         terminal_current = " << esm_signals.terminal_current << std::endl
+			<< "         current_unit     = " << esm_signals.current_unit.in() << std::endl
+			<< "         state_of_charge  = " << esm_signals.state_of_charge << std::endl
+			<< "         soc_unit         = " << esm_signals.soc_unit.in() << std::endl
+			<< "         timestamp        = " << esm_signals.timestamp.in() << std::endl;
 
     }
 
