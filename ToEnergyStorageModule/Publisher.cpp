@@ -144,11 +144,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Write samples
     ToEnergyStorageModule::ToEsmSignal to_esm_signal;
-	int32_t *p = 0x92b01000;
 
 	to_esm_signal.power_interface = "P1";
 	to_esm_signal.control_word = "start";
-	to_esm_signal.pointer = *p;
 
 	time_t current_time;
 	time(&current_time);
