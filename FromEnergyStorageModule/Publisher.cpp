@@ -152,7 +152,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	esm_signal.voltage_unit = "kV";
 	esm_signal.terminal_current = 1.5;
 	esm_signal.current_unit = "kA";
-	esm_signal.state_of_charge = 1;
+	esm_signal.state_of_charge = 50;
 	esm_signal.soc_unit = "pu";
 
 	time_t current_time;

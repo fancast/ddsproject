@@ -14,7 +14,7 @@ module EnergyStorageModule {
 	string voltage_unit;
 	float terminal_current;
 	string current_unit;
-	float state_of_charge;
+	long state_of_charge;
 	string soc_unit;
 	string timestamp;
   };
