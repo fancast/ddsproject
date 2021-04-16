@@ -24,6 +24,19 @@
 #include <iostream>
 #include <ctime>
 
+// includes for fpga interface
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/mman.h>
+#include <cstring> // memcpy()
+#include <type_traits>
+
+#include "compiler-gcc.h"
+#include "gtfpga_helpers.hpp"
+#include "gtfpga.cpp"
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
