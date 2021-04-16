@@ -33,9 +33,9 @@
 #include <cstring> // memcpy()
 #include <type_traits>
 
-#include "compiler-gcc.h"
-#include "gtfpga_helpers.hpp"
-#include "gtfpga.cpp"
+#include "../c++/compiler-gcc.h"
+#include "../c++/gtfpga_helpers.hpp"
+#include "../c++/gtfpga.cpp"
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
