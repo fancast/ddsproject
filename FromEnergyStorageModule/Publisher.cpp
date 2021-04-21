@@ -25,7 +25,7 @@
 #include <ctime>
 
 // includes for fpga interface
-/*#include <sys/types.h>
+#include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -33,7 +33,7 @@
 #include <cstring> // memcpy()
 #include <type_traits>
 
-#include "../c++/compiler-gcc.h"
+/*#include "../c++/compiler-gcc.h"
 #include "../c++/gtfpga_helpers.hpp"
 #include "../c++/gtfpga.cpp"*/
 
