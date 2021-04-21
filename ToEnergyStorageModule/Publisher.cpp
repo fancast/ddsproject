@@ -146,7 +146,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ToEnergyStorageModule::ToEsmSignals to_esm_signals;
 
 	to_esm_signals.power_interface = "P1";
-	to_esm_signals.control_word = "start";
+	to_esm_signals.control_word = 1;
 
 	time_t current_time;
 	time(&current_time);

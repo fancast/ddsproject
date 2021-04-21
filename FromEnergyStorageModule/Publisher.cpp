@@ -25,7 +25,7 @@
 #include <ctime>
 
 // includes for fpga interface
-#include <sys/types.h>
+/*#include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -35,7 +35,7 @@
 
 #include "../c++/compiler-gcc.h"
 #include "../c++/gtfpga_helpers.hpp"
-#include "../c++/gtfpga.cpp"
+#include "../c++/gtfpga.cpp"*/
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -159,8 +159,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     EnergyStorageModule::EsmSignals esm_signals;
 
 	esm_signals.power_interface = "P1";
-	esm_signals.control_word = "start";
-	esm_signals.status     = "on";
+	esm_signals.control_word = 1;
+	esm_signals.device_status = 1;
 	esm_signals.terminal_voltage = 7;
 	esm_signals.voltage_unit = "kV";
 	esm_signals.terminal_current = 1.5;

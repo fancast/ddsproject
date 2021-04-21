@@ -8,8 +8,8 @@ module EnergyStorageModule {
   @topic
   struct EsmSignals {
 	@key string power_interface;
-	string control_word;
-	string status;
+	boolean control_word;
+	boolean device_status;
 	float terminal_voltage;
 	string voltage_unit;
 	float terminal_current;

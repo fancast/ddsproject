@@ -66,8 +66,8 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
 
     if (info.valid_data) {
 		std::cout << "         power_interface  = " << esm_signals.power_interface.in() << std::endl
-			<< "         control_word     = " << esm_signals.control_word.in() << std::endl
-			<< "         status           = " << esm_signals.status.in() << std::endl
+			<< "         control_word     = " << esm_signals.control_word << std::endl
+			<< "         device_status    = " << esm_signals.device_status << std::endl
 			<< "         terminal_voltage = " << esm_signals.terminal_voltage << std::endl
 			<< "         voltage_unit     = " << esm_signals.voltage_unit.in() << std::endl
 			<< "         terminal_current = " << esm_signals.terminal_current << std::endl
