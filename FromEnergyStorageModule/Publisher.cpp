@@ -178,8 +178,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     for (int i = 0; i < 10; ++i) {
       DDS::ReturnCode_t error = esm_signals_writer->write(esm_signals, DDS::HANDLE_NIL);
-	  //esm_signals.terminal_voltage = gtfpga[0];
-	  //gtfpga[0] = static_cast<float>(0);
+	  esm_signals.terminal_voltage = gtfpga[0];
+	  gtfpga[0] = static_cast<float>(0);
 	  ++esm_signals.terminal_current;
 
       if (error != DDS::RETCODE_OK) {
