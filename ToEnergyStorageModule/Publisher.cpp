@@ -158,7 +158,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 	  end = std::chrono::high_resolution_clock::now();
 	  elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-	  esm_signals.timestamp = elapsed.count();
+	  to_esm_signals.timestamp = elapsed.count();
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
