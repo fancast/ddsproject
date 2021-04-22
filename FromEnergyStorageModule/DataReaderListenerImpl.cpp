@@ -74,7 +74,7 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
 			<< "         current_unit     = " << esm_signals.current_unit.in() << std::endl
 			<< "         state_of_charge  = " << esm_signals.state_of_charge << std::endl
 			<< "         soc_unit         = " << esm_signals.soc_unit.in() << std::endl
-			<< "         timestamp        = " << esm_signals.timestamp.in() << std::endl;
+			<< "         timestamp        = " << esm_signals.timestamp << std::endl;
 
     }
 

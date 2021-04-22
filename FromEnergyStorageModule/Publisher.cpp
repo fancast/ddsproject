@@ -22,7 +22,8 @@
 
 #include "EnergyStorageModuleTypeSupportImpl.h"
 #include <iostream>
-#include <ctime>
+//#include <ctime>
+#include <chrono>
 
 // included for fpga interface
 #include <sys/types.h>
@@ -170,13 +171,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	esm_signals.state_of_charge = 50;
 	esm_signals.soc_unit = "pu";
 
-	time_t current_time;
-	time(&current_time);
-	esm_signals.timestamp = asctime(localtime(&current_time));
+	//time_t current_time;
+	//time(&current_time);
+	//esm_signals.timestamp = asctime(localtime(&current_time));
+	esm_signals.timestamp = 0;
 
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
 
     for (int i = 0; i < 100; ++i) {
+      auto begin = std::chrono::high_resolution_clock::now();
       DDS::ReturnCode_t error = esm_signals_writer->write(esm_signals, DDS::HANDLE_NIL);
 	  esm_signals.terminal_voltage = gtfpga[0];
 	  gtfpga[0] = static_cast<float>(0);
@@ -185,6 +188,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	  esm_signals.state_of_charge = gtfpga[2];
 	  gtfpga[2] = static_cast<float>(2);
 	  usleep(500000);
+      auto end = std::chrono::high_resolution_clock::now();
+      auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+	  esm_signals.timestamp = elapsed.count();
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
