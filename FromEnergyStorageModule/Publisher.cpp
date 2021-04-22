@@ -24,7 +24,7 @@
 #include <iostream>
 #include <ctime>
 
-// includes for fpga interface
+// included for fpga interface
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -34,8 +34,8 @@
 #include <type_traits>
 
 #include "../c++/compiler-gcc.h"
-#include "../c++/gtfpga_helpers.hpp"
 #include "../c++/gtfpga.cpp"
+#include "../c++/gtfpga_helpers.hpp"
 
 const off_t PCIE_ADDRESS = get_pci_base_addr();
 
@@ -174,7 +174,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	time(&current_time);
 	esm_signals.timestamp = asctime(localtime(&current_time));
 
-	//auto gtfpga = Gtfpga(PCIE_ADDRESS);
+	auto gtfpga = Gtfpga(PCIE_ADDRESS);
 
     for (int i = 0; i < 10; ++i) {
       DDS::ReturnCode_t error = esm_signals_writer->write(esm_signals, DDS::HANDLE_NIL);
