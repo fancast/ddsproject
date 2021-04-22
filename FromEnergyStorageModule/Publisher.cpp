@@ -174,7 +174,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	time(&current_time);
 	esm_signals.timestamp = asctime(localtime(&current_time));
 
-	//auto gtfpga = Gtfpga(PCIE_ADDRESS);
+	auto gtfpga = Gtfpga(PCIE_ADDRESS);
 
     for (int i = 0; i < 10; ++i) {
       DDS::ReturnCode_t error = esm_signals_writer->write(esm_signals, DDS::HANDLE_NIL);
