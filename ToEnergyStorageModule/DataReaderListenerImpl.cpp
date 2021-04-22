@@ -67,7 +67,7 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
     if (info.valid_data) {
 		std::cout << "         power_interface  = " << to_esm_signals.power_interface.in() << std::endl
 			<< "         control_word     = " << to_esm_signals.control_word << std::endl
-			<< "         timestamp        = " << to_esm_signals.timestamp.in() << std::endl;
+			<< "         timestamp        = " << to_esm_signals.timestamp << std::endl;
 
     }
 

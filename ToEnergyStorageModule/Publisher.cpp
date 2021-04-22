@@ -22,7 +22,7 @@
 
 #include "ToEnergyStorageModuleTypeSupportImpl.h"
 #include <iostream>
-#include <ctime>
+#include <chrono>
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -144,16 +144,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Write samples
     ToEnergyStorageModule::ToEsmSignals to_esm_signals;
-
+	auto begin = std::chrono::high_resolution_clock::now();
 	to_esm_signals.power_interface = "P1";
 	to_esm_signals.control_word = 1;
 
-	time_t current_time;
-	time(&current_time);
-	to_esm_signals.timestamp = asctime(localtime(&current_time));
+	auto end = std::chrono::high_resolution_clock::now();
+	auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+	to_esm_signals.timestamp = elapsed.count();
 
     for (int i = 0; i < 10; ++i) {
+      begin = std::chrono::high_resolution_clock::now();
       DDS::ReturnCode_t error = to_esm_signals_writer->write(to_esm_signals, DDS::HANDLE_NIL);
+
+	  end = std::chrono::high_resolution_clock::now();
+	  elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+	  esm_signals.timestamp = elapsed.count();
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,

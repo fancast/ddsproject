@@ -9,6 +9,6 @@ module ToEnergyStorageModule {
   struct ToEsmSignals {
 	@key string power_interface;
 	boolean control_word;
-	string timestamp;
+	long timestamp;
   };
 };
