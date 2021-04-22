@@ -33,9 +33,9 @@
 #include <cstring> // memcpy()
 #include <type_traits>
 
-#include "../c++/compiler-gcc.h"
-#include "../c++/gtfpga.cpp"
-#include "../c++/gtfpga_helpers.hpp"
+#include "compiler-gcc.h"
+#include "gtfpga_helpers.hpp"
+#include "gtfpga.cpp"
 
 const off_t PCIE_ADDRESS = get_pci_base_addr();
 
