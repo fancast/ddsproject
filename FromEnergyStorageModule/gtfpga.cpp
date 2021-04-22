@@ -24,7 +24,7 @@ private:
 
     
     Gtfpga operator=(const Gtfpga&) = delete;
-    Gtfpga          (const Gtfpga&) = delete;
+    //Gtfpga          (const Gtfpga&) = delete;
 
 public:
     Gtfpga(const off_t PCIE_ADDRESS)

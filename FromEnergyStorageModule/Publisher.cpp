@@ -37,7 +37,7 @@
 #include "gtfpga_helpers.hpp"
 #include "gtfpga.cpp"
 
-off_t PCIE_ADDRESS = get_pci_base_addr();
+const off_t PCIE_ADDRESS = get_pci_base_addr();
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
