@@ -19,7 +19,7 @@ add_executable(publisher
   Publisher.cpp
 )
 OPENDDS_TARGET_SOURCES(publisher EnergyStorageModule.idl)
-target_link_libraries(publisher ${opendds_libs})
+target_link_libraries(publisher -lpci ${opendds_libs} )
 
 # Subscriber
 add_executable(subscriber
