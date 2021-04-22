@@ -176,7 +176,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
 
-    while (true) {
+    for (int i = 0; i < 100; ++i) {
       DDS::ReturnCode_t error = esm_signals_writer->write(esm_signals, DDS::HANDLE_NIL);
 	  esm_signals.terminal_voltage = gtfpga[0];
 	  gtfpga[0] = static_cast<float>(0);
@@ -184,6 +184,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	  gtfpga[1] = static_cast<float>(1);
 	  esm_signals.state_of_charge = gtfpga[2];
 	  gtfpga[2] = static_cast<float>(2);
+	  usleep(50000);
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
