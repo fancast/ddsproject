@@ -22,7 +22,6 @@
 
 #include "EnergyStorageModuleTypeSupportImpl.h"
 #include <iostream>
-//#include <ctime>
 #include <chrono>
 
 // included for fpga interface
@@ -161,6 +160,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Write samples
     EnergyStorageModule::EsmSignals esm_signals;
 
+	auto begin = std::chrono::high_resolution_clock::now();
 	esm_signals.power_interface = "P1";
 	esm_signals.control_word = 1;
 	esm_signals.device_status = 1;
@@ -171,15 +171,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	esm_signals.state_of_charge = 50;
 	esm_signals.soc_unit = "pu";
 
-	//time_t current_time;
-	//time(&current_time);
-	//esm_signals.timestamp = asctime(localtime(&current_time));
-	esm_signals.timestamp = 0;
+	auto end = std::chrono::high_resolution_clock::now();
+	auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+	esm_signals.timestamp = elapsed.count();
 
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
 
     for (int i = 0; i < 100; ++i) {
-      auto begin = std::chrono::high_resolution_clock::now();
+      begin = std::chrono::high_resolution_clock::now();
       DDS::ReturnCode_t error = esm_signals_writer->write(esm_signals, DDS::HANDLE_NIL);
 	  esm_signals.terminal_voltage = gtfpga[0];
 	  gtfpga[0] = static_cast<float>(0);
@@ -187,10 +186,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	  gtfpga[1] = static_cast<float>(1);
 	  esm_signals.state_of_charge = gtfpga[2];
 	  gtfpga[2] = static_cast<float>(2);
-	  usleep(500000);
-      auto end = std::chrono::high_resolution_clock::now();
-      auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+      end = std::chrono::high_resolution_clock::now();
+      elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 	  esm_signals.timestamp = elapsed.count();
+      usleep(500000);
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
