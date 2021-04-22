@@ -17,9 +17,9 @@ project(*publisher) : dcpsexe, dcps_tcp, dcps_rtps_udp {
   }
 
   Source_Files {
-	../c++/compiler-gcc.h
-	../c++/gtfpga.cpp
-	../c++/gtfpga_helpers.hpp
+	compiler-gcc.h
+	gtfpga.cpp
+	gtfpga_helpers.hpp
     Publisher.cpp
   }
 }
