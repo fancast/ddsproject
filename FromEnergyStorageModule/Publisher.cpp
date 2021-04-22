@@ -37,6 +37,8 @@
 #include "gtfpga_helpers.hpp"
 #include "gtfpga.cpp"
 
+off_t PCIE_ADDRESS = get_pci_base_addr();
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -156,9 +158,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ws->detach_condition(condition);
 
     // Write samples
-	const off_t PCIE_ADDRESS = get_pci_base_addr();
-	auto gtfpga = Gtfpga(PCIE_ADDRESS);
-
     EnergyStorageModule::EsmSignals esm_signals;
 
 	esm_signals.power_interface = "P1";
@@ -174,6 +173,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	time_t current_time;
 	time(&current_time);
 	esm_signals.timestamp = asctime(localtime(&current_time));
+
+	auto gtfpga = Gtfpga(PCIE_ADDRESS);
 
     for (int i = 0; i < 10; ++i) {
       DDS::ReturnCode_t error = esm_signals_writer->write(esm_signals, DDS::HANDLE_NIL);
