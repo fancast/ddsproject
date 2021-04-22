@@ -13,6 +13,9 @@ set(opendds_libs
 
 # Publisher
 add_executable(publisher
+  compiler-gcc.h
+  gtfpga_helpers.hpp
+  gtfpga.cpp
   Publisher.cpp
 )
 OPENDDS_TARGET_SOURCES(publisher EnergyStorageModule.idl)
