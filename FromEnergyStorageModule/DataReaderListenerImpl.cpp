@@ -13,7 +13,6 @@
 #include "EnergyStorageModuleTypeSupportImpl.h"
 
 #include <iostream>
-#include <unistd.h>
 
 void
 DataReaderListenerImpl::on_requested_deadline_missed(
@@ -76,7 +75,7 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
 			<< "         state_of_charge  = " << esm_signals.state_of_charge << std::endl
 			<< "         soc_unit         = " << esm_signals.soc_unit.in() << std::endl
 			<< "         timestamp        = " << esm_signals.timestamp << std::endl;
-		usleep(500000);
+
     }
 
   } else {

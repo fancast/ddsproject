@@ -175,7 +175,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 	esm_signals.timestamp = elapsed.count();
 
-    while (true) {
+    for (int i = 0; i < 100; ++i) {
       begin = std::chrono::high_resolution_clock::now();
       DDS::ReturnCode_t error = esm_signals_writer->write(esm_signals, DDS::HANDLE_NIL);
 	  esm_signals.terminal_voltage = gtfpga[0];
@@ -184,6 +184,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       end = std::chrono::high_resolution_clock::now();
       elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 	  esm_signals.timestamp = elapsed.count();
+      usleep(500000);
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
