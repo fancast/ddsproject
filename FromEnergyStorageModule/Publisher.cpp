@@ -184,7 +184,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	  gtfpga[1] = static_cast<float>(1);
 	  esm_signals.state_of_charge = gtfpga[2];
 	  gtfpga[2] = static_cast<float>(2);
-	  usleep(50000);
+	  usleep(500000);
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
