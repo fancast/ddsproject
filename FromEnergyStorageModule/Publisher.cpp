@@ -33,9 +33,11 @@
 #include <cstring> // memcpy()
 #include <type_traits>
 
-#include "compiler-gcc.h"
-#include "gtfpga_helpers.hpp"
-#include "gtfpga.cpp"
+#include "../c++/compiler-gcc.h"
+#include "../c++/gtfpga_helpers.hpp"
+#include "../c++/gtfpga.cpp"
+
+const off_t PCIE_ADDRESS = get_pci_base_addr();
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -172,9 +174,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	time(&current_time);
 	esm_signals.timestamp = asctime(localtime(&current_time));
 
+	auto gtfpga = Gtfpga(PCIE_ADDRESS);
+
     for (int i = 0; i < 10; ++i) {
       DDS::ReturnCode_t error = esm_signals_writer->write(esm_signals, DDS::HANDLE_NIL);
-	  //++esm_signals.terminal_voltage;
+	  esm_signals.terminal_voltage = gtfpga[0];
+	  gtfpga[0] = static_cast<float>(0);
 	  ++esm_signals.terminal_current;
 
       if (error != DDS::RETCODE_OK) {
