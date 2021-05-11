@@ -180,12 +180,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       DDS::ReturnCode_t error = esm_signals_writer->write(esm_signals, DDS::HANDLE_NIL);
 	  esm_signals.terminal_voltage = gtfpga[0];
 	  esm_signals.terminal_current = gtfpga[1];
-      gtfpga[1] = esm_signals.control_word;
+      gtfpga[1] = static_cast<float>(esm_signals.control_word);
 	  esm_signals.state_of_charge = gtfpga[2];
       end = std::chrono::high_resolution_clock::now();
       elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 	  esm_signals.timestamp = elapsed.count();
-      gtfpga[2] = esm_signals.timestamp;
+      gtfpga[2] = static_cast<float>(esm_signals.timestamp);
       usleep(500000);
 
       if (error != DDS::RETCODE_OK) {
