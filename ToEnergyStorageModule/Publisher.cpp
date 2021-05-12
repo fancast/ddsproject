@@ -24,6 +24,21 @@
 #include <iostream>
 #include <chrono>
 
+ // included for fpga interface
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/mman.h>
+#include <cstring> // memcpy()
+#include <type_traits>
+
+#include "compiler-gcc.h"
+#include "gtfpga_helpers.hpp"
+#include "gtfpga.cpp"
+
+const off_t PCIE_ADDRESS = get_pci_base_addr();
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -144,9 +159,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Write samples
     ToEnergyStorageModule::ToEsmSignals to_esm_signals;
+    auto gtfpga = Gtfpga(PCIE_ADDRESS);
 	auto begin = std::chrono::high_resolution_clock::now();
 	to_esm_signals.power_interface = "P1";
-	to_esm_signals.control_word = 1;
+	to_esm_signals.control_word = 0;
 
 	auto end = std::chrono::high_resolution_clock::now();
 	auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
@@ -155,7 +171,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     for (int i = 0; i < 10; ++i) {
       begin = std::chrono::high_resolution_clock::now();
       DDS::ReturnCode_t error = to_esm_signals_writer->write(to_esm_signals, DDS::HANDLE_NIL);
-
+      gtfpga[1] = static_cast<float>(to_esm_signals.control_word);
 	  end = std::chrono::high_resolution_clock::now();
 	  elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 	  to_esm_signals.timestamp = elapsed.count();
