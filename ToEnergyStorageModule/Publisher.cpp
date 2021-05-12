@@ -168,13 +168,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 	to_esm_signals.timestamp = elapsed.count();
 
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 100; ++i) {
       begin = std::chrono::high_resolution_clock::now();
       DDS::ReturnCode_t error = to_esm_signals_writer->write(to_esm_signals, DDS::HANDLE_NIL);
       gtfpga[1] = static_cast<float>(to_esm_signals.control_word);
 	  end = std::chrono::high_resolution_clock::now();
 	  elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 	  to_esm_signals.timestamp = elapsed.count();
+      usleep(500000);
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
