@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Attach to the segment to get a pointer to it.
-    shmp = shmat(shmid, 0, 0);
+    shmp = (void*) shmat(shmid, 0, 0);
     if (shmp == (void*)-1) {
         perror("Shared memory attach");
         return 1;
