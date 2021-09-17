@@ -1,40 +1,86 @@
-#include <stdio.h> 
-#include <sys/shm.h> 
-#include <sys/stat.h> 
+#include<stdio.h>
+#include<sys/ipc.h>
+#include<sys/shm.h>
+#include<sys/types.h>
+#include<string.h>
+#include<errno.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<string.h>
 
-int main()
-{
-    int segment_id;
-    char* shared_memory;
-    struct shmid_ds shmbuffer;
-    int segment_size;
-    const int shared_segment_size = 0x6400;
+#define BUF_SIZE 1024
+#define SHM_KEY 0x1234
 
-    /* Allocate a shared memory segment.  */
-    segment_id = shmget(IPC_PRIVATE, shared_segment_size,
-        IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
-    /* Attach the shared memory segment.  */
-    shared_memory = (char*)shmat(segment_id, 0, 0);
-    printf("shared memory attached at address %p\n", shared_memory);
-    /* Determine the segment's size. */
-    shmctl(segment_id, IPC_STAT, &shmbuffer);
-    segment_size = shmbuffer.shm_segsz;
-    printf("segment size: %d\n", segment_size);
-    /* Write a string to the shared memory segment.  */
-    sprintf(shared_memory, "Hello, world.");
-    /* Detach the shared memory segment.  */
-    shmdt(shared_memory);
+struct shmseg {
+    int cnt;
+    int complete;
+    char buf[BUF_SIZE];
+};
+int fill_buffer(char* bufptr, int size);
 
-    /* Reattach the shared memory segment, at a different address.  */
-    shared_memory = (char*)shmat(segment_id, (void*)0x5000000, 0);
-    printf("shared memory reattached at address %p\n", shared_memory);
-    /* Print out the string from shared memory.  */
-    printf("%s\n", shared_memory);
-    /* Detach the shared memory segment.  */
-    shmdt(shared_memory);
+int main(int argc, char* argv[]) {
+    int shmid, numtimes;
+    struct shmseg* shmp;
+    char* bufptr;
+    int spaceavailable;
+    shmid = shmget(SHM_KEY, sizeof(struct shmseg), 0644 | IPC_CREAT);
+    if (shmid == -1) {
+        perror("Shared memory");
+        return 1;
+    }
 
-    /* Deallocate the shared memory segment.  */
-    shmctl(segment_id, IPC_RMID, 0);
+    // Attach to the segment to get a pointer to it.
+    shmp = shmat(shmid, 0, 0);
+    if (shmp == (void*)-1) {
+        perror("Shared memory attach");
+        return 1;
+    }
 
+    /* Transfer blocks of data from buffer to shared memory */
+    bufptr = shmp->buf;
+    spaceavailable = BUF_SIZE;
+    for (numtimes = 0; numtimes < 5; numtimes++) {
+        shmp->cnt = fill_buffer(bufptr, spaceavailable);
+        shmp->complete = 0;
+        printf("Writing Process: Shared Memory Write: Wrote %d bytes\n", shmp->cnt);
+        bufptr = shmp->buf;
+        spaceavailable = BUF_SIZE;
+        sleep(3);
+    }
+    printf("Writing Process: Wrote %d times\n", numtimes);
+    shmp->complete = 1;
+
+    if (shmdt(shmp) == -1) {
+        perror("shmdt");
+        return 1;
+    }
+
+    if (shmctl(shmid, IPC_RMID, 0) == -1) {
+        perror("shmctl");
+        return 1;
+    }
+    printf("Writing Process: Complete\n");
     return 0;
+}
+
+int fill_buffer(char* bufptr, int size) {
+    static char ch = 'A';
+    int filled_count;
+
+    //printf("size is %d\n", size);
+    memset(bufptr, ch, size - 1);
+    bufptr[size - 1] = '\0';
+    if (ch > 122)
+        ch = 65;
+    if ((ch >= 65) && (ch <= 122)) {
+        if ((ch >= 91) && (ch <= 96)) {
+            ch = 65;
+        }
+    }
+    filled_count = strlen(bufptr);
+
+    //printf("buffer count is: %d\n", filled_count);
+    //printf("buffer filled is:%s\n", bufptr);
+    ch++;
+    return filled_count;
 }
