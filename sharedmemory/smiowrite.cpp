@@ -16,7 +16,7 @@ int main()
     char* str = (char*)shmat(shmid, (void*)0, 0);
 
     cout << "Write Data : ";
-    gets(str);
+    fgets(str);
 
     printf("Data written in memory: %s\n", str);
 
