@@ -25,7 +25,7 @@ int main()
 
     /* Write a string to the shared memory segment.  */
     shared_memory[0] = 25980123;
-    sprintf(shared_memory[0], "This is the data written in memory: %2f");
+    sprintf("This is the data written in memory: %2f", shared_memory[0]);
 
     /* Detach the shared memory segment.  */
     shmdt(shared_memory);
