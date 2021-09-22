@@ -30,7 +30,7 @@ int main()
     shmdt(shared_memory);
 
     /* Reattach the shared memory segment, at a different address.  */
-    shared_memory = (char*)shmat(segment_id, (void*)0x5000000, 0);
+    shared_memory = (char*)shmat(segment_id, (void*)0, 0);
     printf("shared memory reattached at address %p\n", shared_memory);
 
     /* Print out the string from shared memory.  */
