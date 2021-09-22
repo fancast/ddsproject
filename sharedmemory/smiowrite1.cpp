@@ -1,9 +1,6 @@
 #include <stdio.h>
-#include <iostream>
 #include <sys/shm.h> 
 #include <sys/stat.h> 
-
-using namespace std;
 
 int main()
 {
@@ -28,8 +25,7 @@ int main()
 
     /* Write a string to the shared memory segment.  */
     shared_memory[0] = 25980123;
-    cout << "This is the data written in memory: " << shared_memory[0] << "\n";
-    //sprintf("This is the data written in memory: %2f", shared_memory[0]);
+    printf("This is the data written in memory: %2f\n", shared_memory[0]);
 
     /* Detach the shared memory segment.  */
     shmdt(shared_memory);
