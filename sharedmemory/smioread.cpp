@@ -1,27 +1,51 @@
-#include <iostream>
-#include <sys/ipc.h>
-#include <sys/shm.h>
-#include <stdio.h>
-using namespace std;
+#include<stdio.h>
+#include<sys/ipc.h>
+#include<sys/shm.h>
+#include<sys/types.h>
+#include<string.h>
+#include<errno.h>
+#include<stdlib.h>
 
-int main()
-{
-    // ftok to generate unique key
-    key_t key = ftok("shmfile", 65);
+#define BUF_SIZE 1024
+#define SHM_KEY 0x1234
 
-    // shmget returns an identifier in shmid
-    int shmid = shmget(key, 1024, 0666 | IPC_CREAT);
+struct shmseg {
+    int cnt;
+    int complete;
+    char buf[BUF_SIZE];
+};
 
-    // shmat to attach to shared memory
-    char* str = (char*)shmat(shmid, (void*)0, 0);
+int main(int argc, char* argv[]) {
+    int shmid;
+    struct shmseg* shmp;
+    shmid = shmget(SHM_KEY, sizeof(struct shmseg), 0644 | IPC_CREAT);
+    if (shmid == -1) {
+        perror("Shared memory");
+        return 1;
+    }
 
-    printf("Data read from memory: %s\n", str);
+    // Attach to the segment to get a pointer to it.
+    shmp = shmat(shmid, NULL, 0);
+    if (shmp == (void*)-1) {
+        perror("Shared memory attach");
+        return 1;
+    }
 
-    //detach from shared memory 
-    shmdt(str);
-
-    // destroy the shared memory
-    shmctl(shmid, IPC_RMID, NULL);
-
+    /* Transfer blocks of data from shared memory to stdout*/
+    while (shmp->complete != 1) {
+        printf("segment contains : \n\"%s\"\n", shmp->buf);
+        if (shmp->cnt == -1) {
+            perror("read");
+            return 1;
+        }
+        printf("Reading Process: Shared Memory: Read %d bytes\n", shmp->cnt);
+        sleep(3);
+    }
+    printf("Reading Process: Reading Done, Detaching Shared Memory\n");
+    if (shmdt(shmp) == -1) {
+        perror("shmdt");
+        return 1;
+    }
+    printf("Reading Process: Complete\n");
     return 0;
 }
