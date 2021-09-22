@@ -35,7 +35,7 @@ int main()
     printf("shared memory reattached at address %p\n", shared_memory);
 
     /* Print out the string from shared memory.  */
-    printf("%2f\n", shared_memory);
+    printf("%2f\n", shared_memory[0]);
 
     /* Detach the shared memory segment.  */
     shmdt(shared_memory);
