@@ -24,8 +24,8 @@ int main()
     printf("segment size: %d\n", segment_size);
 
     /* Write a string to the shared memory segment.  */
-    shared_memory[0] = 25980123
-    sprintf(shared_memory[0], "This is the string written in memory");
+    shared_memory[0] = 25980123;
+    sprintf(shared_memory[0], "This is the data written in memory: %2f");
 
     /* Detach the shared memory segment.  */
     shmdt(shared_memory);
@@ -35,7 +35,7 @@ int main()
     printf("shared memory reattached at address %p\n", shared_memory);
 
     /* Print out the string from shared memory.  */
-    printf("%s\n", shared_memory);
+    printf("%2f\n", shared_memory);
 
     /* Detach the shared memory segment.  */
     shmdt(shared_memory);
