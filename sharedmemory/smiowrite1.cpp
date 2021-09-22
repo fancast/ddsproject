@@ -5,17 +5,17 @@
 int main()
 {
     int segment_id;
-    char* shared_memory;
+    double* shared_memory;
     struct shmid_ds shmbuffer;
     int segment_size;
-    const int shared_segment_size = 0x6400;
+    const int shared_segment_size = sizeof(double);
 
     /* Allocate a shared memory segment.  */
-    segment_id = shmget(IPC_PRIVATE, sizeof(double),
+    segment_id = shmget(IPC_PRIVATE, shared_segment_size,
         IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
 
     /* Attach the shared memory segment.  */
-    shared_memory = (char*)shmat(segment_id, 0, 0);
+    shared_memory = (double*)shmat(segment_id, 0, 0);
     printf("shared memory attached at address %p\n", shared_memory);
 
     /* Determine the segment's size. */
@@ -24,13 +24,14 @@ int main()
     printf("segment size: %d\n", segment_size);
 
     /* Write a string to the shared memory segment.  */
-    sprintf(shared_memory, "This is the string written in memory");
+    shared_memory[0] = 25980123
+    sprintf(shared_memory[0], "This is the string written in memory");
 
     /* Detach the shared memory segment.  */
     shmdt(shared_memory);
 
     /* Reattach the shared memory segment, at a different address.  */
-    shared_memory = (char*)shmat(segment_id, (void*)0, 0);
+    shared_memory = (double*)shmat(segment_id, (void*)0, 0);
     printf("shared memory reattached at address %p\n", shared_memory);
 
     /* Print out the string from shared memory.  */
