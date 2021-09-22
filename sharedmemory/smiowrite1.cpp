@@ -1,4 +1,5 @@
-#include <stdio.h> 
+#include <stdio.h>
+#include <iostream>
 #include <sys/shm.h> 
 #include <sys/stat.h> 
 
