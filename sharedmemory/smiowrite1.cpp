@@ -43,5 +43,8 @@ int main()
     /* Deallocate the shared memory segment.  */
     shmctl(segment_id, IPC_RMID, 0);
 
+    printf("shared memory reattached at address %p\n", shared_memory);
+    printf("This is the data written in memory: %2f\n", shared_memory[0]);
+
     return 0;
 }
