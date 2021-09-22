@@ -8,7 +8,7 @@ int main()
     char* shared_memory;
     struct shmid_ds shmbuffer;
     int segment_size;
-    const int shared_segment_size = 0xFFFFFFFFFFFFFFFF;
+    const double shared_segment_size = 0xFFFFFFFFFFFFFFFF;
 
     /* Allocate a shared memory segment.  */
     segment_id = shmget(IPC_PRIVATE, shared_segment_size,
