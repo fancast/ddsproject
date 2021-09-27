@@ -41,7 +41,7 @@ public:
     auto write_value(double &signal)
     {
         /* Write a string to the shared memory segment.  */
-        shared_memory = &signal;]
+        shared_memory = &signal;
 
     }
 
