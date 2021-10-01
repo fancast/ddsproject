@@ -21,7 +21,7 @@
 #endif
 
 #include "DataReaderListenerImpl.h"
-#include "EnergyStorageModuleTypeSupportImpl.h"
+#include "EsmFeedbackSignalsTypeSupportImpl.h"
 
 
 int
@@ -46,9 +46,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    // Register Type (EnergyStorageModule::EsmSignals)
-    EnergyStorageModule::EsmSignalsTypeSupport_var ts =
-      new EnergyStorageModule::EsmSignalsTypeSupportImpl;
+    // Register Type (EsmFeedbackSignals::FeedbackSignals)
+    EsmFeedbackSignals::FeedbackSignalsTypeSupport_var ts =
+      new EsmFeedbackSignals::FeedbackSignalsTypeSupportImpl;
 
     if (ts->register_type(participant, "") != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
@@ -106,8 +106,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    EnergyStorageModule::EsmSignalsDataReader_var reader_i =
-      EnergyStorageModule::EsmSignalsDataReader::_narrow(reader);
+    EsmFeedbackSignals::FeedbackSignalsDataReader_var reader_i =
+      EsmFeedbackSignals::FeedbackSignalsDataReader::_narrow(reader);
 
     if (!reader_i) {
       ACE_ERROR_RETURN((LM_ERROR,

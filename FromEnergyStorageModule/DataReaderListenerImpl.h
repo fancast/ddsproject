@@ -1,9 +1,4 @@
-/*
- *
- *
- * Distributed under the OpenDDS License.
- * See: http://www.opendds.org/license.html
- */
+/* Data Reader derived from the EsmFeedbackSignals IDL example */
 
 #ifndef DATAREADER_LISTENER_IMPL_H
 #define DATAREADER_LISTENER_IMPL_H

@@ -18,7 +18,7 @@ add_executable(publisher
   gtfpga.cpp
   Publisher.cpp
 )
-OPENDDS_TARGET_SOURCES(publisher EnergyStorageModule.idl)
+OPENDDS_TARGET_SOURCES(publisher EsmFeedbackSignals.idl)
 target_link_libraries(publisher -lpci ${opendds_libs} )
 
 # Subscriber
@@ -26,5 +26,5 @@ add_executable(subscriber
   Subscriber.cpp
   DataReaderListenerImpl.cpp
 )
-OPENDDS_TARGET_SOURCES(subscriber EnergyStorageModule.idl)
+OPENDDS_TARGET_SOURCES(subscriber EsmFeedbackSignals.idl)
 target_link_libraries(subscriber ${opendds_libs})

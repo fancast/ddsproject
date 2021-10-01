@@ -1,16 +1,11 @@
-/*
- *
- *
- * Distributed under the OpenDDS License.
- * See: http://www.opendds.org/license.html
- */
+/* Data Reader derived from the EsmFeedbackSignals IDL example */
 
 #include <ace/Log_Msg.h>
 #include <ace/OS_NS_stdlib.h>
 
 #include "DataReaderListenerImpl.h"
-#include "EnergyStorageModuleTypeSupportC.h"
-#include "EnergyStorageModuleTypeSupportImpl.h"
+#include "EsmFeedbackSignalsTypeSupportC.h"
+#include "EsmFeedbackSignalsTypeSupportImpl.h"
 
 #include <iostream>
 
@@ -45,8 +40,8 @@ DataReaderListenerImpl::on_liveliness_changed(
 void
 DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
 {
-  EnergyStorageModule::EsmSignalsDataReader_var reader_i =
-    EnergyStorageModule::EsmSignalsDataReader::_narrow(reader);
+  EsmFeedbackSignals::FeedbackSignalsDataReader_var reader_i =
+    EsmFeedbackSignals::FeedbackSignalsDataReader::_narrow(reader);
 
   if (!reader_i) {
     ACE_ERROR((LM_ERROR,
@@ -55,27 +50,21 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
     ACE_OS::exit(1);
   }
 
-  EnergyStorageModule::EsmSignals esm_signals;
+  EsmFeedbackSignals::FeedbackSignals feedback_signals;
   DDS::SampleInfo info;
 
-  DDS::ReturnCode_t error = reader_i->take_next_sample(esm_signals, info);
+  DDS::ReturnCode_t error = reader_i->take_next_sample(feedback_signals, info);
 
   if (error == DDS::RETCODE_OK) {
     std::cout << "SampleInfo.sample_rank = " << info.sample_rank << std::endl;
     std::cout << "SampleInfo.instance_state = " << info.instance_state << std::endl;
 
     if (info.valid_data) {
-		std::cout << "         power_interface  = " << esm_signals.power_interface.in() << std::endl
-			<< "         control_word     = " << esm_signals.control_word << std::endl
-			<< "         device_status    = " << esm_signals.device_status << std::endl
-			<< "         terminal_voltage = " << esm_signals.terminal_voltage << std::endl
-			<< "         voltage_unit     = " << esm_signals.voltage_unit.in() << std::endl
-			<< "         terminal_current = " << esm_signals.terminal_current << std::endl
-			<< "         current_unit     = " << esm_signals.current_unit.in() << std::endl
-			<< "         state_of_charge  = " << esm_signals.state_of_charge << std::endl
-			<< "         soc_unit         = " << esm_signals.soc_unit.in() << std::endl
-			<< "         timestamp        = " << esm_signals.timestamp << std::endl;
-
+            std::cout << "         feedback_signals.name                = " << feedback_signals.name.in() << std::endl
+            << "         feedback_signals.isolation_status    = " << feedback_signals.isolation_status << std::endl
+            << "         feedback_signals.terminal_voltage_kV = " << feedback_signals.terminal_voltage_kV << std::endl
+            << "         feedback_signals.terminal_current_kA = " << feedback_signals.terminal_current_kA << std::endl
+            << "         feedback_signals.state_of_charge_pu  = " << feedback_signals.state_of_charge_pu << std::endl;
     }
 
   } else {

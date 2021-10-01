@@ -1,9 +1,4 @@
-/*
- *
- *
- * Distributed under the OpenDDS License.
- * See: http://www.opendds.org/license.html
- */
+/* Publisher example derived from the EsmFeedbackSignals IDL example */
 
 #include <ace/Log_Msg.h>
 
@@ -20,9 +15,8 @@
 #  include <dds/DCPS/transport/rtps_udp/RtpsUdp.h>
 #endif
 
-#include "EnergyStorageModuleTypeSupportImpl.h"
+#include "EsmFeedbackSignalsTypeSupportImpl.h"
 #include <iostream>
-#include <chrono>
 
 // included for fpga interface
 #include <sys/types.h>
@@ -61,9 +55,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    // Register TypeSupport (EnergyStorageModule::EsmSignals)
-    EnergyStorageModule::EsmSignalsTypeSupport_var ts =
-      new EnergyStorageModule::EsmSignalsTypeSupportImpl;
+    // Register TypeSupport (EsmFeedbackSignals::FeedbackSignals)
+    EsmFeedbackSignals::FeedbackSignalsTypeSupport_var ts =
+      new EsmFeedbackSignals::FeedbackSignalsTypeSupportImpl;
 
     if (ts->register_type(participant, "") != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
@@ -75,7 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Create Topic (Energy Storage Module Signals)
     CORBA::String_var type_name = ts->get_type_name();
     DDS::Topic_var topic =
-      participant->create_topic("Energy Storage Module Signals",
+      participant->create_topic("Energy Storage Module Feedback Signals",
                                 type_name,
                                 TOPIC_QOS_DEFAULT,
                                 0,
@@ -115,10 +109,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    EnergyStorageModule::EsmSignalsDataWriter_var esm_signals_writer =
-      EnergyStorageModule::EsmSignalsDataWriter::_narrow(writer);
+    EsmFeedbackSignals::FeedbackSignalsDataWriter_var feedback_signals_writer =
+      EsmFeedbackSignals::FeedbackSignalsDataWriter::_narrow(writer);
 
-    if (!esm_signals_writer) {
+    if (!feedback_signals_writer) {
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT("ERROR: %N:%l: main() -")
                         ACE_TEXT(" _narrow failed!\n")),
@@ -158,35 +152,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ws->detach_condition(condition);
 
     // Write samples
-    EnergyStorageModule::EsmSignals esm_signals;
+    EsmFeedbackSignals::FeedbackSignals feedback_signals;
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
-	auto begin = std::chrono::high_resolution_clock::now();
-	esm_signals.power_interface = "P1";
-	esm_signals.control_word = 1;
-	esm_signals.device_status = 1;
-	esm_signals.terminal_voltage = gtfpga[0];
-	esm_signals.voltage_unit = "kV";
-	esm_signals.terminal_current = gtfpga[1];
-	esm_signals.current_unit = "kA";
-	esm_signals.state_of_charge = gtfpga[2];
-	esm_signals.soc_unit = "pu";
-
-	auto end = std::chrono::high_resolution_clock::now();
-	auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-	esm_signals.timestamp = elapsed.count();
+	feedback_signals.name = "P1";
+	feedback_signals.isolation_status = 1;
+	feedback_signals.terminal_voltage_kV = gtfpga[0];
+	feedback_signals.terminal_current_kA = gtfpga[1];
+	feedback_signals.state_of_charge_pu = gtfpga[2];
 
     for (int i = 0; i < 100; ++i) {
-      begin = std::chrono::high_resolution_clock::now();
-      DDS::ReturnCode_t error = esm_signals_writer->write(esm_signals, DDS::HANDLE_NIL);
-	  esm_signals.terminal_voltage = gtfpga[0];
-	  esm_signals.terminal_current = gtfpga[1];
-      gtfpga[1] = static_cast<float>(esm_signals.control_word);
-	  esm_signals.state_of_charge = gtfpga[2];
-      end = std::chrono::high_resolution_clock::now();
-      elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-	  esm_signals.timestamp = elapsed.count();
-      gtfpga[2] = static_cast<float>(esm_signals.timestamp);
-      usleep(500000);
+      DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
+	  feedback_signals.terminal_voltage_kV = gtfpga[0];
+	  feedback_signals.terminal_current_kA = gtfpga[1];
+	  feedback_signals.state_of_charge_pu = gtfpga[2];
+      usleep(500000);   //Not required for actual application
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
@@ -197,7 +176,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Wait for samples to be acknowledged
     DDS::Duration_t timeout = { 30, 0 };
-    if (esm_signals_writer->wait_for_acknowledgments(timeout) != DDS::RETCODE_OK) {
+    if (feedback_signals_writer->wait_for_acknowledgments(timeout) != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT("ERROR: %N:%l: main() -")
                         ACE_TEXT(" wait_for_acknowledgments failed!\n")),
