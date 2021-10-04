@@ -1,6 +1,6 @@
 /* Derived from section 5.4.1 in MDD */
 
-module EsmFeedbackSignals
+module EnergyStorageModule
 {
 	@topic
 	struct FeedbackSignals
