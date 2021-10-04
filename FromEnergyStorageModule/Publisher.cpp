@@ -55,9 +55,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    // Register TypeSupport (EsmFeedbackSignals::FeedbackSignals)
+    // Register TypeSupport (EnergyStorageModule::FeedbackSignals)
     EnergyStorageModule::EsmFeedbackSignalsTypeSupport_var ts =
-      new EsmFeedbackSignals::EsmFeedbackSignalsTypeSupportImpl;
+      new EnergyStorageModule::EsmFeedbackSignalsTypeSupportImpl;
 
     if (ts->register_type(participant, "") != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
@@ -109,8 +109,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    EsmFeedbackSignals::FeedbackSignalsDataWriter_var feedback_signals_writer =
-      EsmFeedbackSignals::FeedbackSignalsDataWriter::_narrow(writer);
+    EnergyStorageModule::FeedbackSignalsDataWriter_var feedback_signals_writer =
+      EnergyStorageModule::FeedbackSignalsDataWriter::_narrow(writer);
 
     if (!feedback_signals_writer) {
       ACE_ERROR_RETURN((LM_ERROR,
@@ -152,7 +152,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ws->detach_condition(condition);
 
     // Write samples
-    EsmFeedbackSignals::FeedbackSignals feedback_signals;
+    EnergyStorageModule::FeedbackSignals feedback_signals;
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
 	feedback_signals.name = "P1";
 	feedback_signals.isolation_status = 1;
