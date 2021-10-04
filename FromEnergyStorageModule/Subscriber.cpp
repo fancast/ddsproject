@@ -60,7 +60,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Create Topic (Energy Storage Module Signals)
     CORBA::String_var type_name = ts->get_type_name();
     DDS::Topic_var topic =
-      participant->create_topic("Energy Storage Module Signals",
+      participant->create_topic("Energy Storage Module Feedback Signals",
                                 type_name,
                                 TOPIC_QOS_DEFAULT,
                                 0,
