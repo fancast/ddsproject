@@ -4,8 +4,8 @@
 #include <ace/OS_NS_stdlib.h>
 
 #include "DataReaderListenerImpl.h"
-#include "FeedbackSignalsTypeSupportC.h"
-#include "FeedbackSignalsTypeSupportImpl.h"
+#include "EsmFeedbackSignalsTypeSupportC.h"
+#include "EsmFeedbackSignalsTypeSupportImpl.h"
 
 #include <iostream>
 
