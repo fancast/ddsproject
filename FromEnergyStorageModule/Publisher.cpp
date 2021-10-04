@@ -15,7 +15,7 @@
 #  include <dds/DCPS/transport/rtps_udp/RtpsUdp.h>
 #endif
 
-#include "EsmFeedbackSignalsTypeSupportImpl.h"
+#include "FeedbackSignalsTypeSupportImpl.h"
 #include <iostream>
 
 // included for fpga interface
@@ -57,7 +57,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Register TypeSupport (EnergyStorageModule::FeedbackSignals)
     EnergyStorageModule::FeedbackSignalsTypeSupport_var ts =
-      new EnergyStorageModule::EsmFeedbackSignalsTypeSupportImpl;
+      new EnergyStorageModule::FeedbackSignalsTypeSupportImpl;
 
     if (ts->register_type(participant, "") != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,

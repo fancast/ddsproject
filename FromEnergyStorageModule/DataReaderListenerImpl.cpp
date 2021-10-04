@@ -4,8 +4,8 @@
 #include <ace/OS_NS_stdlib.h>
 
 #include "DataReaderListenerImpl.h"
-#include "EsmFeedbackSignalsTypeSupportC.h"
-#include "EsmFeedbackSignalsTypeSupportImpl.h"
+#include "FeedbackSignalsTypeSupportC.h"
+#include "FeedbackSignalsTypeSupportImpl.h"
 
 #include <iostream>
 
@@ -40,8 +40,8 @@ DataReaderListenerImpl::on_liveliness_changed(
 void
 DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
 {
-  EsmFeedbackSignals::FeedbackSignalsDataReader_var reader_i =
-    EsmFeedbackSignals::FeedbackSignalsDataReader::_narrow(reader);
+  EnergyStorageModule::FeedbackSignalsDataReader_var reader_i =
+    EnergyStorageModule::FeedbackSignalsDataReader::_narrow(reader);
 
   if (!reader_i) {
     ACE_ERROR((LM_ERROR,
@@ -50,7 +50,7 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
     ACE_OS::exit(1);
   }
 
-  EsmFeedbackSignals::FeedbackSignals feedback_signals;
+  EnergyStorageModule::FeedbackSignals feedback_signals;
   DDS::SampleInfo info;
 
   DDS::ReturnCode_t error = reader_i->take_next_sample(feedback_signals, info);

@@ -1,9 +1,4 @@
-/*
- *
- *
- * Distributed under the OpenDDS License.
- * See: http://www.opendds.org/license.html
- */
+/* Subscriber example derived from the EsmFeedbackSignals IDL example */
 
 #include <ace/Log_Msg.h>
 
@@ -21,7 +16,7 @@
 #endif
 
 #include "DataReaderListenerImpl.h"
-#include "EsmFeedbackSignalsTypeSupportImpl.h"
+#include "FeedbackSignalsTypeSupportImpl.h"
 
 
 int
@@ -48,7 +43,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Register Type (EnergyStorageModule::FeedbackSignals)
     EnergyStorageModule::FeedbackSignalsTypeSupport_var ts =
-      new EnergyStorageModule::EsmFeedbackSignalsTypeSupportImpl;
+      new EnergyStorageModule::FeedbackSignalsTypeSupportImpl;
 
     if (ts->register_type(participant, "") != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
