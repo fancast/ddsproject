@@ -56,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
     // Register TypeSupport (EnergyStorageModule::FeedbackSignals)
-    EnergyStorageModule::EsmFeedbackSignalsTypeSupport_var ts =
+    EnergyStorageModule::FeedbackSignalsTypeSupport_var ts =
       new EnergyStorageModule::EsmFeedbackSignalsTypeSupportImpl;
 
     if (ts->register_type(participant, "") != DDS::RETCODE_OK) {
