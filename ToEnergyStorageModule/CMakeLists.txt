@@ -15,7 +15,7 @@ set(opendds_libs
 add_executable(publisher
   Publisher.cpp
 )
-OPENDDS_TARGET_SOURCES(publisher ToEnergyStorageModule.idl)
+OPENDDS_TARGET_SOURCES(publisher EsmCommandSignals.idl)
 target_link_libraries(publisher ${opendds_libs})
 
 # Subscriber
@@ -23,5 +23,5 @@ add_executable(subscriber
   Subscriber.cpp
   DataReaderListenerImpl.cpp
 )
-OPENDDS_TARGET_SOURCES(subscriber ToEnergyStorageModule.idl)
+OPENDDS_TARGET_SOURCES(subscriber EsmCommandSignals.idl)
 target_link_libraries(subscriber ${opendds_libs})
