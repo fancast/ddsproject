@@ -1,16 +1,11 @@
-/*
- *
- *
- * Distributed under the OpenDDS License.
- * See: http://www.opendds.org/license.html
- */
+/* Data Reader derived from the EsmFeedbackSignals IDL example */
 
 #include <ace/Log_Msg.h>
 #include <ace/OS_NS_stdlib.h>
 
 #include "DataReaderListenerImpl.h"
-#include "ToEnergyStorageModuleTypeSupportC.h"
-#include "ToEnergyStorageModuleTypeSupportImpl.h"
+#include "EsmCommandSignalsTypeSupportC.h"
+#include "EsmCommandSignalsTypeSupportImpl.h"
 
 #include <iostream>
 
@@ -45,8 +40,8 @@ DataReaderListenerImpl::on_liveliness_changed(
 void
 DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
 {
-  ToEnergyStorageModule::ToEsmSignalsDataReader_var reader_i =
-    ToEnergyStorageModule::ToEsmSignalsDataReader::_narrow(reader);
+  EnergyStorageModule::CommandSignalsDataReader_var reader_i =
+    EnergyStorageModule::CommandSignalsDataReader::_narrow(reader);
 
   if (!reader_i) {
     ACE_ERROR((LM_ERROR,
@@ -55,19 +50,18 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
     ACE_OS::exit(1);
   }
 
-  ToEnergyStorageModule::ToEsmSignals to_esm_signals;
+  EnergyStorageModule::CommandSignals command_signals;
   DDS::SampleInfo info;
 
-  DDS::ReturnCode_t error = reader_i->take_next_sample(to_esm_signals, info);
+  DDS::ReturnCode_t error = reader_i->take_next_sample(command_signals, info);
 
   if (error == DDS::RETCODE_OK) {
     std::cout << "SampleInfo.sample_rank = " << info.sample_rank << std::endl;
     std::cout << "SampleInfo.instance_state = " << info.instance_state << std::endl;
 
     if (info.valid_data) {
-		std::cout << "         power_interface  = " << to_esm_signals.power_interface.in() << std::endl
-			<< "         control_word     = " << to_esm_signals.control_word << std::endl
-			<< "         timestamp        = " << to_esm_signals.timestamp << std::endl;
+		std::cout << "         command_signals.name  = " << command_signals.name.in() << std::endl
+			<< "         command_signals.isolation_cmd     = " << command_signals.isolation_cmd << std::endl;
 
     }
 

@@ -21,7 +21,7 @@
 #endif
 
 #include "DataReaderListenerImpl.h"
-#include "ToEnergyStorageModuleTypeSupportImpl.h"
+#include "EsmCommandSignalsTypeSupportImpl.h"
 
 
 int
@@ -46,9 +46,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    // Register Type (ToEnergyStorageModule::ToEsmSignals)
-    ToEnergyStorageModule::ToEsmSignalsTypeSupport_var ts =
-      new ToEnergyStorageModule::ToEsmSignalsTypeSupportImpl;
+    // Register Type (EnergyStorageModule::EsmCommandSignals)
+    EnergyStorageModule::EsmCommandSignalsTypeSupport_var ts =
+      new EnergyStorageModule::EsmCommandSignalsTypeSupportImpl;
 
     if (ts->register_type(participant, "") != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
@@ -60,7 +60,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Create Topic (Energy Storage Module Signals)
     CORBA::String_var type_name = ts->get_type_name();
     DDS::Topic_var topic =
-      participant->create_topic("Energy Storage Module Signals",
+      participant->create_topic("Energy Storage Module Command Signals",
                                 type_name,
                                 TOPIC_QOS_DEFAULT,
                                 0,
@@ -106,8 +106,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    ToEnergyStorageModule::ToEsmSignalsDataReader_var reader_i =
-      ToEnergyStorageModule::ToEsmSignalsDataReader::_narrow(reader);
+    EnergyStorageModule::EsmCommandSignalsDataReader_var reader_i =
+      EnergyStorageModule::EsmCommandSignalsDataReader::_narrow(reader);
 
     if (!reader_i) {
       ACE_ERROR_RETURN((LM_ERROR,
