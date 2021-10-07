@@ -46,9 +46,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    // Register Type (EnergyStorageModule::EsmCommandSignals)
-    EnergyStorageModule::EsmCommandSignalsTypeSupport_var ts =
-      new EnergyStorageModule::EsmCommandSignalsTypeSupportImpl;
+    // Register Type (EnergyStorageModule::CommandSignals)
+    EnergyStorageModule::CommandSignalsTypeSupport_var ts =
+      new EnergyStorageModule::CommandSignalsTypeSupportImpl;
 
     if (ts->register_type(participant, "") != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
@@ -57,7 +57,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    // Create Topic (Energy Storage Module Signals)
+    // Create Topic (Energy Storage Module Command Signals)
     CORBA::String_var type_name = ts->get_type_name();
     DDS::Topic_var topic =
       participant->create_topic("Energy Storage Module Command Signals",
@@ -106,8 +106,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    EnergyStorageModule::EsmCommandSignalsDataReader_var reader_i =
-      EnergyStorageModule::EsmCommandSignalsDataReader::_narrow(reader);
+    EnergyStorageModule::CommandSignalsDataReader_var reader_i =
+      EnergyStorageModule::CommandSignalsDataReader::_narrow(reader);
 
     if (!reader_i) {
       ACE_ERROR_RETURN((LM_ERROR,

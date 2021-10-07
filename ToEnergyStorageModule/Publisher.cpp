@@ -40,9 +40,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    // Register TypeSupport (EnergyStorageModule::EsmCommandSignals)
-    EnergyStorageModule::EsmCommandSignalsTypeSupport_var ts =
-      new EnergyStorageModule::EsmCommandSignalsTypeSupportImpl;
+    // Register TypeSupport (EnergyStorageModule::CommandSignals)
+    EnergyStorageModule::CommandSignalsTypeSupport_var ts =
+      new EnergyStorageModule::CommandSignalsTypeSupportImpl;
 
     if (ts->register_type(participant, "") != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
@@ -51,7 +51,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    // Create Topic (Energy Storage Module Signals)
+    // Create Topic (Energy Storage Module Command Signals)
     CORBA::String_var type_name = ts->get_type_name();
     DDS::Topic_var topic =
       participant->create_topic("Energy Storage Module Command Signals",
@@ -94,10 +94,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                        1);
     }
 
-    EnergyStorageModule::EsmCommandSignalsDataWriter_var esm_command_signals_writer =
-      EnergyStorageModule::EsmCommandSignalsDataWriter::_narrow(writer);
+    EnergyStorageModule::CommandSignalsDataWriter_var command_signals_writer =
+      EnergyStorageModule::CommandSignalsDataWriter::_narrow(writer);
 
-    if (!esm_command_signals_writer) {
+    if (!command_signals_writer) {
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT("ERROR: %N:%l: main() -")
                         ACE_TEXT(" _narrow failed!\n")),
@@ -137,13 +137,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ws->detach_condition(condition);
 
     // Write samples
-    EnergyStorageModule::EsmCommandSignals esm_command_signals;
-	esm_command_signals.name = "P1";
-	esm_command_signals.isolation_cmd = 1;
+    EnergyStorageModule::CommandSignals command_signals;
+	command_signals.name = "P1";
+	command_signals.isolation_cmd = 1;
 
 
     for (int i = 0; i < 10; ++i) {
-      DDS::ReturnCode_t error = esm_command_signals_writer->write(esm_command_signals, DDS::HANDLE_NIL);
+      DDS::ReturnCode_t error = command_signals_writer->write(command_signals, DDS::HANDLE_NIL);
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
@@ -154,7 +154,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Wait for samples to be acknowledged
     DDS::Duration_t timeout = { 30, 0 };
-    if (esm_command_signals_writer->wait_for_acknowledgments(timeout) != DDS::RETCODE_OK) {
+    if (command_signals_writer->wait_for_acknowledgments(timeout) != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT("ERROR: %N:%l: main() -")
                         ACE_TEXT(" wait_for_acknowledgments failed!\n")),
