@@ -15,7 +15,7 @@ these are the recommend steps:
    "out-of-source" build. This is accomplished by executing the commands
    on linux: 'mkdir build' and 'cd build'
  - Run `cmake ../` to generate the build and `cmake --build .` to build.
-   'make' can also be used instead of 'cmake --build .'
+   `make` can also be used instead of `cmake --build .`
  - To run the example you can run `./esm_feedback_publisher -DCPSConfigFile ../rtps.ini`, `./esm_feedback_subscriber
    -DCPSConfigFile ../rtps.ini`, `./esm_command_publisher -DCPSConfigFile ../rtps.ini`, and `./esm_command_subscriber
    -DCPSConfigFile ../rtps.ini` at the same time.
