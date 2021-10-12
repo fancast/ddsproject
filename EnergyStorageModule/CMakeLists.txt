@@ -16,15 +16,15 @@ add_executable(esm_feedback_publisher
   compiler-gcc.h
   gtfpga_helpers.hpp
   gtfpga.cpp
-  Publisher.cpp
+  EsmFeedbackPublisher.cpp
 )
 OPENDDS_TARGET_SOURCES(esm_feedback_publisher EsmFeedbackSignals.idl)
 target_link_libraries(esm_feedback_publisher -lpci ${opendds_libs} )
 
 # Subscriber
 add_executable(esm_feedback_subscriber
-  Subscriber.cpp
-  DataReaderListenerImpl.cpp
+  EsmFeedbackSubscriber.cpp
+  EsmFeedbackDataReaderListenerImpl.cpp
 )
 OPENDDS_TARGET_SOURCES(esm_feedback_subscriber EsmFeedbackSignals.idl)
 target_link_libraries(esm_feedback_subscriber ${opendds_libs})
