@@ -1,0 +1,37 @@
+project(*idl): dcps {
+  requires += no_opendds_safety_profile
+  TypeSupport_Files {
+    EsmFeedbackSignals.idl
+  }
+
+  custom_only = 1
+}
+
+project(*esm_feedback_publisher) : dcpsexe, dcps_tcp, dcps_rtps_udp {
+  requires += no_opendds_safety_profile
+  exename   = esm_feedback_publisher
+  after    += *idl
+
+  TypeSupport_Files {
+    EsmFeedbackSignals.idl
+  }
+
+  Source_Files {
+    EsmFeedbackPublisher.cpp
+  }
+}
+
+project(*esm_feedback_subscriber) : dcpsexe, dcps_tcp, dcps_rtps_udp {
+  requires += no_opendds_safety_profile
+  exename   = esm_feedback_subscriber
+  after    += *esm_feedback_publisher
+
+  TypeSupport_Files {
+    EsmFeedbackSignals.idl
+  }
+
+  Source_Files {
+    EsmFeedbackDataReaderListenerImpl.cpp
+    EsmFeedbackSubscriber.cpp
+  }
+}
