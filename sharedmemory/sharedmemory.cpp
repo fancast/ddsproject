@@ -6,9 +6,9 @@
 #include <iostream>
 using namespace std;
 
-//constexpr size_t SHARED_SEGMENT_SIZE = 128*sizeof(double);
+//constexpr size_t size = 128*sizeof(double);
 
-class ControlSMIO {
+class Smio {
 
 private:
 
@@ -19,18 +19,16 @@ private:
 
 public:
 
-	auto get_reserved_addr(size_t size)
-	{
-        /* Allocate a shared memory segment.  */
+    Smio(size_t size)
+    {
+        /* Allocate a shared memory segment. */
         segment_id = shmget(IPC_PRIVATE, size,
             IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
-
-	}
+    }
 
     auto attach_memory_segment()
     {
-
-        /* Attach the shared memory segment.  */
+        /* Attach the shared memory segment. */
         shared_memory = (double*)shmat(segment_id, 0, 0);
         
         /* Determine the segment's size. */
@@ -40,7 +38,7 @@ public:
     }
     auto write_value(double &signal)
     {
-        /* Write a string to the shared memory segment.  */
+        /* Write a string to the shared memory segment. */
         shared_memory = &signal;
 
     }
