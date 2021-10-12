@@ -1,0 +1,14 @@
+/* Derived from section 5.4.1 in MDD */
+
+module EnergyStorageModule
+{
+	@topic
+	struct FeedbackSignals
+	{
+		@key string name;
+		boolean isolation_status;
+		float terminal_voltage_kV;
+		float terminal_current_kA;
+		float state_of_charge_pu;
+	};
+};
