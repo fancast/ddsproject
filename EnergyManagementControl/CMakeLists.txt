@@ -12,19 +12,19 @@ set(opendds_libs
 )
 
 # Publisher
-add_executable(publisher
+add_executable(feedback_publisher
   compiler-gcc.h
   gtfpga_helpers.hpp
   gtfpga.cpp
   Publisher.cpp
 )
-OPENDDS_TARGET_SOURCES(publisher EmcFeedbackSignals.idl)
-target_link_libraries(publisher -lpci ${opendds_libs} )
+OPENDDS_TARGET_SOURCES(feedback_publisher EmcFeedbackSignals.idl)
+target_link_libraries(feedback_publisher -lpci ${opendds_libs} )
 
 # Subscriber
-add_executable(subscriber
+add_executable(feedback_subscriber
   Subscriber.cpp
   DataReaderListenerImpl.cpp
 )
-OPENDDS_TARGET_SOURCES(subscriber EmcFeedbackSignals.idl)
-target_link_libraries(subscriber ${opendds_libs})
+OPENDDS_TARGET_SOURCES(feedback_subscriber EmcFeedbackSignals.idl)
+target_link_libraries(feedback_subscriber ${opendds_libs})
