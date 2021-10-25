@@ -15,6 +15,7 @@ class Smio {
         float* shared_memory;
         struct shmid_ds shmbuffer;
         int segment_size;
+        int arr_length;
 
     public:
 
@@ -59,12 +60,12 @@ class Smio {
             shmctl(segment_id, IPC_RMID, 0);
         }
 
-        auto write_value(float &signals)
+        auto write_value(float *signals)
         {
-            int signals_length = sizeof(signals)/sizeof(signals[0]);
+            arr_length = sizeof(signals)/sizeof(signals[0]);
 
             /* Write a string to the shared memory segment. */
-            for(int i = 0; i < signals_length; i++)
+            for(int i = 0; i < arr_length; i++)
                 shared_memory[i] = signals[i];
         }
 
@@ -77,5 +78,8 @@ class Smio {
         {
             printf("shared memory attached at address %p\n", shared_memory);
             printf("segment size: %d\n", segment_size);
+            printf("Signals from memory:\n");
+            for (int i = 0; i < arr_length; i++)
+                printf("%2f\n", shared_memory[i]);
         }
 };
