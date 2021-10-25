@@ -13,7 +13,7 @@ using namespace std;
 int main()
 {
 	int size = 128;
-	float arr = {127, 23, 26, 24, 0, 0};
+	float arr[] = {127, 23, 26, 24, 0, 0};
 	float signals_array[size];
 	//printf("\nEmpty constructor:\n");
 	//Smio rtds_smio_empty;
