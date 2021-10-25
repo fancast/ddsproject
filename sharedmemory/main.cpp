@@ -21,5 +21,7 @@ int main()
 	Smio rtds_smio(size);
 	rtds_smio.write_value(arr);
 	rtds_smio.print_results();
-
+	float* p = rtds_smio.read_memory();
+	for (int i = 0; i < 6; i++)
+		printf("array value %d: %2f\n", i, p[i]);
 }
