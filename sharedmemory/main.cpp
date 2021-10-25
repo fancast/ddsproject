@@ -14,12 +14,10 @@ int main()
 {
 	int size = 128;
 
-	printf("\nEmpty constructor:\n");
-	Smio rtds_smio_empty;
-	rtds_smio_empty.print_results();
+	//printf("\nEmpty constructor:\n");
+	//Smio rtds_smio_empty;
 	printf("\nSize 128 constructor:\n");
 	Smio rtds_smio(size);
-	rtds_smio.print_results();
 
 	float signals_array[size];
 

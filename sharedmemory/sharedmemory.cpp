@@ -7,8 +7,6 @@
 
 using namespace std;
 
-//constexpr size_t size = 128*sizeof(double);
-
 class Smio {
 
     private:
@@ -34,7 +32,6 @@ class Smio {
             shmctl(segment_id, IPC_STAT, &shmbuffer);
             segment_size = shmbuffer.shm_segsz;
             printf("segment size: %d\n", segment_size);
-
         }
 
         Smio(size_t size)
@@ -51,22 +48,9 @@ class Smio {
             shmctl(segment_id, IPC_STAT, &shmbuffer);
             segment_size = shmbuffer.shm_segsz;
             printf("segment size: %d\n", segment_size);
-
         }
 
-        auto write_value(float &signal)
-        {
-            /* Write a string to the shared memory segment. */
-            shared_memory = &signal;
-
-        }
-
-        auto read_value() const
-        {
-            return shared_memory;
-        }
-
-        auto detach_memory_segment()
+        ~Smio()
         {
             /* Detach the shared memory segment.  */
             shmdt(shared_memory);
@@ -75,12 +59,23 @@ class Smio {
             shmctl(segment_id, IPC_RMID, 0);
         }
 
+        auto write_value(float &signals)
+        {
+            int signals_length = sizeof(signals)/sizeof(signals[0]);
+
+            /* Write a string to the shared memory segment. */
+            for(int i = 0; i < signals_length; i++)
+                shared_memory[i] = signals[i];
+        }
+
+        auto read_memory() const
+        {
+            return shared_memory;
+        }
+
         auto print_results()
         {
-
             printf("shared memory attached at address %p\n", shared_memory);
             printf("segment size: %d\n", segment_size);
         }
-
-
 };
