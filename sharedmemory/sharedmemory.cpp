@@ -62,7 +62,7 @@ class Smio {
 
         auto write_value(float *signals)
         {
-            arr_length = sizeof(signals)/sizeof(signals[0]);
+            arr_length = sizeof(signals)/sizeof(float);
 
             /* Write a string to the shared memory segment. */
             for(int i = 0; i < arr_length; i++)
