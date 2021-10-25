@@ -14,7 +14,7 @@ class Smio {
     private:
 
         int segment_id;
-        volatile float* shared_memory;
+        float* shared_memory;
         struct shmid_ds shmbuffer;
         int segment_size;
 
