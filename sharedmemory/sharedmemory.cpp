@@ -62,8 +62,10 @@ class Smio {
 
         auto write_value(float *signals)
         {
-            arr_length = *(&signals + 1) - signals;
+            arr_length = sizeof(signals) / sizeof(signals[0]);
             printf("Array length: %d\n", arr_length);
+            printf("Signals size %d\n", sizeof(signals));
+            printf("1st item size %d\n", sizeof(signals[0]);
 
             /* Write a string to the shared memory segment. */
             for(int i = 0; i < arr_length; i++)
