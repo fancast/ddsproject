@@ -60,7 +60,7 @@ class Smio {
             shmctl(segment_id, IPC_RMID, 0);
         }
 
-        auto write_value(float *signals)
+        auto write_value(float signals[])
         {
             arr_length = sizeof(signals) / sizeof(signals[0]);
             printf("Array length: %d\n", arr_length);
