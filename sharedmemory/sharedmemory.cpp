@@ -40,7 +40,7 @@ class Smio {
         Smio(size_t size)
         {
             /* Allocate a shared memory segment. */
-            segment_id = shmget(IPC_PRIVATE, size,
+            segment_id = shmget(IPC_PRIVATE, sizeof(float)*size,
                 IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
 
             /* Attach the shared memory segment. */
