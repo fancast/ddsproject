@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <iostream>
-#include "sharedmemory.cpp"
+#include "rts.cpp"
 using namespace std;
 
 class EmcStandIn {
