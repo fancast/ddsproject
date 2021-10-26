@@ -22,4 +22,6 @@ int main()
 	rtds_smio.write_Signals(arr, size);
 	rtds_smio.print_Results();
 	float* p = rtds_smio.get_Base_Address();
+	delete rtds_smio;
+	rtds_smio.print_Results();
 }
