@@ -63,7 +63,6 @@ class Smio {
         auto write_Signals(float *signals, int &size)
         {
             arr_length = size;
-            printf("Array length: %d\n", arr_length);
 
             /* Write a string to the shared memory segment. */
             for(int i = 0; i < arr_length; i++)
@@ -81,6 +80,6 @@ class Smio {
             printf("segment size: %d\n", segment_size);
             printf("Signals from memory:\n");
             for (int i = 0; i < arr_length; i++)
-                printf("%2f\n", shared_memory[i]);
+                printf("%d: %2f\n", i, shared_memory[i]);
         }
 };
