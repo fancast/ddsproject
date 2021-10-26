@@ -16,8 +16,7 @@ public:
     EmcStandIn()
     {
         total_signals = 128;
-        Smio shared_memory_io();
-        sm = shared_memory_io;
+        sm = new Smio();
     }
 
     EmcStandIn(size_t size)

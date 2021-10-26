@@ -17,8 +17,7 @@ public:
     RtsStandIn()
     {
         total_signals = 128;
-        Smio shared_memory_io();
-        sm = shared_memory_io;
+        sm = new Smio();
     }
 
     RtsStandIn(size_t size)
