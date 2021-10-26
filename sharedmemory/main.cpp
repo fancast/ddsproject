@@ -4,7 +4,6 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <iostream>
-#include "sharedmemory.cpp"
 #include "emc.cpp"
 #include "rts.cpp"
 
