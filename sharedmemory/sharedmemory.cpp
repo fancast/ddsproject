@@ -60,7 +60,7 @@ class Smio {
             shmctl(segment_id, IPC_RMID, 0);
         }
 
-        auto write_Signals(float *signals, int &size const)
+        auto write_Signals(float *signals, int &size)
         {
             arr_length = size;
             printf("Array length: %d\n", arr_length);
