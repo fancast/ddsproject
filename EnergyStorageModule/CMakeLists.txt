@@ -17,17 +17,20 @@ add_executable(esm_feedback_publisher
   gtfpga_helpers.hpp
   gtfpga.cpp
   EsmFeedbackPublisher.cpp
+  #new subscriber
+  EsmFeedbackSubscriber.cpp
+  EsmFeedbackDataReaderListenerImpl.cpp
 )
 OPENDDS_TARGET_SOURCES(esm_feedback_publisher EsmFeedbackSignals.idl)
 target_link_libraries(esm_feedback_publisher -lpci ${opendds_libs} )
 
 # Esm Feedback Signals Subscriber
-add_executable(esm_feedback_subscriber
-  EsmFeedbackSubscriber.cpp
-  EsmFeedbackDataReaderListenerImpl.cpp
-)
-OPENDDS_TARGET_SOURCES(esm_feedback_subscriber EsmFeedbackSignals.idl)
-target_link_libraries(esm_feedback_subscriber ${opendds_libs})
+#add_executable(esm_feedback_subscriber
+#  EsmFeedbackSubscriber.cpp
+#  EsmFeedbackDataReaderListenerImpl.cpp
+#)
+#OPENDDS_TARGET_SOURCES(esm_feedback_subscriber EsmFeedbackSignals.idl)
+#target_link_libraries(esm_feedback_subscriber ${opendds_libs})
 
 # Esm Command Signals Publisher
 add_executable(esm_command_publisher
@@ -35,14 +38,17 @@ add_executable(esm_command_publisher
   gtfpga_helpers.hpp
   gtfpga.cpp
   EsmCommandPublisher.cpp
+  #new subscriber
+  EsmCommandSubscriber.cpp
+  EsmCommandDataReaderListenerImpl.cpp
 )
 OPENDDS_TARGET_SOURCES(esm_command_publisher EsmCommandSignals.idl)
 target_link_libraries(esm_command_publisher -lpci ${opendds_libs} )
 
 # Esm Command Signals Subscriber
-add_executable(esm_command_subscriber
-  EsmCommandSubscriber.cpp
-  EsmCommandDataReaderListenerImpl.cpp
-)
-OPENDDS_TARGET_SOURCES(esm_command_subscriber EsmCommandSignals.idl)
-target_link_libraries(esm_command_subscriber ${opendds_libs})
+#add_executable(esm_command_subscriber
+#  EsmCommandSubscriber.cpp
+#  EsmCommandDataReaderListenerImpl.cpp
+#)
+#OPENDDS_TARGET_SOURCES(esm_command_subscriber EsmCommandSignals.idl)
+#target_link_libraries(esm_command_subscriber ${opendds_libs})
