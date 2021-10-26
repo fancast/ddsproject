@@ -22,6 +22,4 @@ int main()
 	rtds_smio.write_Signals(arr, size);
 	rtds_smio.print_Results();
 	float* p = rtds_smio.get_Base_Address();
-	for (int i = 0; i < size; i++)
-		printf("array value %d: %2f\n", i, p[i]);
 }
