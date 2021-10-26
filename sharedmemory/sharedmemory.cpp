@@ -60,24 +60,22 @@ class Smio {
             shmctl(segment_id, IPC_RMID, 0);
         }
 
-        auto write_value(float signals[])
+        auto write_Signals(float *signals, int &size const)
         {
-            arr_length = sizeof(signals) / sizeof(signals[0]);
+            arr_length = size;
             printf("Array length: %d\n", arr_length);
-            printf("Signals size %ld\n", sizeof(signals));
-            printf("1st item size %ld\n", sizeof(signals[0]));
 
             /* Write a string to the shared memory segment. */
             for(int i = 0; i < arr_length; i++)
                 shared_memory[i] = signals[i];
         }
 
-        auto read_memory() const
+        auto get_Base_Address() const
         {
             return shared_memory;
         }
 
-        auto print_results()
+        auto print_Results()
         {
             printf("shared memory attached at address %p\n", shared_memory);
             printf("segment size: %d\n", segment_size);
