@@ -20,8 +20,8 @@ int main()
 	Smio rtds_smio(size);
 	rtds_smio.write_Signals(arr, size);
 	rtds_smio.print_Results();
-	float* p = rtds_smio.get_Base_Address();
+	float *p = rtds_smio.get_Base_Address();
 
-	//EmcStandIn emc(10);
-	//RtsStandIn rts(3);
+	EmcStandIn emc(10);
+	RtsStandIn rts(3);
 }
