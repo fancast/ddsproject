@@ -16,13 +16,13 @@ public:
     RtsStandIn()
     {
         total_signals = 128;
-        sm = Smio(total_signals);
+        //sm = Smio(total_signals);
     }
 
     RtsStandIn(size_t size)
     {
         total_signals = size;
-        sm = Smio(total_signals);
+        //sm = Smio(total_signals);
     }
 
 
