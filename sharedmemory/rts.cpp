@@ -1,4 +1,4 @@
-/* RTDS stand in example */
+/* RTS stand in example */
 
 #include <stdio.h>
 #include <iostream>
@@ -8,8 +8,7 @@ using namespace std;
 class RtsStandIn {
 
 private:
-    float *command_signals;
-    int total_signals;
+    size_t total_signals;
     Smio sm;
 
 public:
@@ -17,14 +16,13 @@ public:
     RtsStandIn()
     {
         total_signals = 128;
-        sm = new Smio();
+        sm = Smio(total_signals);
     }
 
     RtsStandIn(size_t size)
     {
         total_signals = size;
-        Smio shared_memory_io(total_signals);
-        sm = shared_memory_io;
+        sm = Smio(total_signals);
     }
 
 

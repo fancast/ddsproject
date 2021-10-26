@@ -16,14 +16,13 @@ public:
     EmcStandIn()
     {
         total_signals = 128;
-        sm = new Smio();
+        sm = Smio(total_signals);
     }
 
     EmcStandIn(size_t size)
     {
         total_signals = size;
-        Smio shared_memory_io(total_signals);
-        sm = shared_memory_io;
+        sm = Smio(total_signals);
     }
 
     auto write_Value(float* signals, int& size)
