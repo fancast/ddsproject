@@ -138,14 +138,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ws->detach_condition(condition);
 
     // Write samples
+    int size = 128;
+    float arr[size] = { 119.234, 3.06, 51, 64.97, 0, 12 };
+    Smio rtds_smio(size);
+    rtds_smio.write_Signals(arr, size);
+    float* p = rtds_smio.get_Base_Address();
+    EmcStandIn emc(10);
+    RtsStandIn rts(3);
+
     EnergyManagementControl::CommandSignals command_signals;
 	command_signals.name = "P1";
-	command_signals.signal_1 = 0;
-	command_signals.signal_2 = 0;
-	command_signals.signal_3 = 0;
-    command_signals.signal_4 = 0;
-    command_signals.signal_5 = 0;
-    command_signals.signal_6 = 0;
+	command_signals.signal_1 = p[0];
+	command_signals.signal_2 = p[1];
+	command_signals.signal_3 = p[2];
+    command_signals.signal_4 = p[3];
+    command_signals.signal_5 = p[4];
+    command_signals.signal_6 = p[5];
     command_signals.signal_7 = 0;
     command_signals.signal_8 = 0;
     command_signals.signal_9 = 0;
@@ -153,12 +161,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     while(1) {
       DDS::ReturnCode_t error = command_signals_writer->write(command_signals, DDS::HANDLE_NIL);
-      command_signals.signal_1 = 0;
-      command_signals.signal_2 = 0;
-      command_signals.signal_3 = 0;
-      command_signals.signal_4 = 0;
-      command_signals.signal_5 = 0;
-      command_signals.signal_6 = 0;
+      command_signals.signal_1 = p[0];
+      command_signals.signal_2 = p[1];
+      command_signals.signal_3 = p[2];
+      command_signals.signal_4 = p[3];
+      command_signals.signal_5 = p[4];
+      command_signals.signal_6 = p[5];
       command_signals.signal_7 = 0;
       command_signals.signal_8 = 0;
       command_signals.signal_9 = 0;

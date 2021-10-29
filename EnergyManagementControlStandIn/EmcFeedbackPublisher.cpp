@@ -138,17 +138,25 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ws->detach_condition(condition);
 
     // Write samples
+    int size = 128;
+    float arr[size] = { 127.234, 23.06, 26, 24.97, 0, 0 };
+    Smio rtds_smio(size);
+    rtds_smio.write_Signals(arr, size);
+    float* p = rtds_smio.get_Base_Address();
+    EmcStandIn emc(10);
+    RtsStandIn rts(3);
+
     EnergyManagementControl::FeedbackSignals feedback_signals;
 	feedback_signals.name = "P1";
-	feedback_signals.signal_1 = 0;
-	feedback_signals.signal_2 = 0;
-	feedback_signals.signal_3 = 0;
+	feedback_signals.signal_1 = p[0];
+	feedback_signals.signal_2 = p[1];
+	feedback_signals.signal_3 = p[2];
 
     while(1) {
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
-	  feedback_signals.signal_1 = 0;
-	  feedback_signals.signal_2 = 0;
-      feedback_signals.signal_3 = 0;
+      feedback_signals.signal_1 = p[0];
+      feedback_signals.signal_2 = p[1];
+      feedback_signals.signal_3 = p[2];
       usleep(500000);   //Not required for actual application
 
       if (error != DDS::RETCODE_OK) {
