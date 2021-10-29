@@ -13,9 +13,6 @@ int main()
 {
 	int size = 128;
 	float arr[size] = {127.234, 23.06, 26, 24.97, 0, 0};
-	//float signals_array[size];
-	//printf("\nEmpty constructor:\n");
-	//Smio rtds_smio_empty;
 	printf("\nSize 128 constructor:\n");
 	Smio rtds_smio(size);
 	rtds_smio.write_Signals(arr, size);
