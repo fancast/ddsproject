@@ -1,0 +1,11 @@
+/* Derived from section 5.4.1 in MDD */
+
+module EnergyStorageModule
+{
+	@topic
+	struct CommandSignals
+	{
+		@key string name;
+		boolean isolation_cmd;
+	};
+};
