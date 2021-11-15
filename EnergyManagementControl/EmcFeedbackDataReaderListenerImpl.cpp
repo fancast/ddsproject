@@ -62,8 +62,7 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
     if (info.valid_data) {
             std::cout << "         feedback_signals.name        = " << feedback_signals.name.in() << std::endl
             << "         feedback_signals.signal_1    = " << feedback_signals.signal_1 << std::endl
-            << "         feedback_signals.signal_2    = " << feedback_signals.signal_2 << std::endl
-            << "         feedback_signals.signal_3    = " << feedback_signals.signal_3 << std::endl;
+            << "         feedback_signals.signal_2    = " << feedback_signals.signal_2 << std::endl;
     }
 
   } else {

@@ -155,7 +155,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     EnergyManagementControl::FeedbackSignals feedback_signals;
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
 	feedback_signals.name = "P1";
-	feedback_signals.signal_1 = gtfpga[0];
+	feedback_signals.signal_1 = 18;
     feedback_signals.signal_2 = 25;
 
     while(1) {
