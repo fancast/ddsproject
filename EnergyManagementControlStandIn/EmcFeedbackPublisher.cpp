@@ -16,8 +16,22 @@
 #endif
 
 #include "EmcFeedbackSignalsTypeSupportImpl.h"
-#include "emc.cpp"
 #include <iostream>
+
+// included for fpga interface
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/mman.h>
+#include <cstring> // memcpy()
+#include <type_traits>
+
+#include "compiler-gcc.h"
+#include "gtfpga_helpers.hpp"
+#include "gtfpga.cpp"
+
+const off_t PCIE_ADDRESS = get_pci_base_addr();
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -138,23 +152,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ws->detach_condition(condition);
 
     // Write samples
-    int size = 128;
-    float arr[size] = { 127.234, 23.06, 26, 24.97, 0, 0 };
-    Smio emc_smio(size);
-    emc_smio.write_Signals(arr, size);
-    float* p = emc_smio.get_Base_Address();
-    EmcStandIn emc(2);
-
     EnergyManagementControl::FeedbackSignals feedback_signals;
+	auto gtfpga = Gtfpga(PCIE_ADDRESS);
 	feedback_signals.name = "P1";
-	feedback_signals.signal_1 = p[0];
-	feedback_signals.signal_2 = p[1];
+	feedback_signals.signal_1 = 18;
+    feedback_signals.signal_2 = 25;
+    gtfpga[0] = feedback_signals.signal_1;
+    gtfpga[1] = feedback_signals.signal_2;
 
     while(1) {
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
-      feedback_signals.signal_1 = p[0];
-      feedback_signals.signal_2 = p[1];
+	  feedback_signals.signal_1 = gtfpga[0];
+      feedback_signals.signal_2 = gtfpga[1];
       usleep(500000);   //Not required for actual application
+      gtfpga[0] = feedback_signals.signal_1;
+      gtfpga[1] = feedback_signals.signal_2;
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
