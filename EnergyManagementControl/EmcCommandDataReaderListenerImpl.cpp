@@ -61,16 +61,7 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
 
     if (info.valid_data) {
             std::cout << "         command_signals.name         = " << command_signals.name.in() << std::endl
-            << "         command_signals.signal_1     = " << command_signals.signal_1 << std::endl
-            << "         command_signals.signal_2     = " << command_signals.signal_2 << std::endl
-            << "         command_signals.signal_3     = " << command_signals.signal_3 << std::endl
-            << "         command_signals.signal_4     = " << command_signals.signal_4 << std::endl
-            << "         command_signals.signal_5     = " << command_signals.signal_5 << std::endl
-            << "         command_signals.signal_6     = " << command_signals.signal_6 << std::endl
-            << "         command_signals.signal_7     = " << command_signals.signal_7 << std::endl
-            << "         command_signals.signal_8     = " << command_signals.signal_8 << std::endl
-            << "         command_signals.signal_9     = " << command_signals.signal_9 << std::endl
-            << "         command_signals.signal_10    = " << command_signals.signal_10 << std::endl;
+            << "         command_signals.sum     = " << command_signals.signal_1 << std::endl;
     }
 
   } else {

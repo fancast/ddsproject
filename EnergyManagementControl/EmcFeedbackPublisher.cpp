@@ -156,14 +156,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
 	feedback_signals.name = "P1";
 	feedback_signals.signal_1 = gtfpga[0];
-	feedback_signals.signal_2 = gtfpga[1];
-	feedback_signals.signal_3 = gtfpga[2];
+    feedback_signals.signal_2 = gtfpga[1];
 
     while(1) {
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
 	  feedback_signals.signal_1 = gtfpga[0];
-	  feedback_signals.signal_2 = gtfpga[1];
-      feedback_signals.signal_3 = gtfpga[2];
+      feedback_signals.signal_2 = gtfpga[1];
       usleep(500000);   //Not required for actual application
 
       if (error != DDS::RETCODE_OK) {

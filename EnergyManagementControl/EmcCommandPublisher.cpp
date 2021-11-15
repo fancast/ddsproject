@@ -155,29 +155,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     EnergyManagementControl::CommandSignals command_signals;
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
 	command_signals.name = "P1";
-	command_signals.signal_1 = gtfpga[0];
-	command_signals.signal_2 = gtfpga[1];
-	command_signals.signal_3 = gtfpga[2];
-    command_signals.signal_4 = gtfpga[3];
-    command_signals.signal_5 = gtfpga[4];
-    command_signals.signal_6 = gtfpga[5];
-    command_signals.signal_7 = gtfpga[6];
-    command_signals.signal_8 = gtfpga[7];
-    command_signals.signal_9 = gtfpga[8];
-    command_signals.signal_10 = gtfpga[9];
+	command_signals.sum = gtfpga[0];
 
     while(1) {
       DDS::ReturnCode_t error = command_signals_writer->write(command_signals, DDS::HANDLE_NIL);
-	  command_signals.signal_1 = gtfpga[0];
-	  command_signals.signal_2 = gtfpga[1];
-      command_signals.signal_3 = gtfpga[2];
-      command_signals.signal_4 = gtfpga[3];
-      command_signals.signal_5 = gtfpga[4];
-      command_signals.signal_6 = gtfpga[5];
-      command_signals.signal_7 = gtfpga[6];
-      command_signals.signal_8 = gtfpga[7];
-      command_signals.signal_9 = gtfpga[8];
-      command_signals.signal_10 = gtfpga[9];
+	  command_signals.sum = gtfpga[0];
       usleep(500000);   //Not required for actual application
 
       if (error != DDS::RETCODE_OK) {
