@@ -142,7 +142,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	command_signals.isolation_cmd = 1;
 
 
-    for (int i = 0; i < 10; ++i) {
+    while(1) {
       DDS::ReturnCode_t error = command_signals_writer->write(command_signals, DDS::HANDLE_NIL);
 
       if (error != DDS::RETCODE_OK) {

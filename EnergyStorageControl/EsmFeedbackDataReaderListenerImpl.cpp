@@ -61,10 +61,10 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
 
     if (info.valid_data) {
             std::cout << "         feedback_signals.name                = " << feedback_signals.name.in() << std::endl
-            << "         feedback_signals.isolation_status    = " << feedback_signals.isolation_status << std::endl
             << "         feedback_signals.terminal_voltage_kV = " << feedback_signals.terminal_voltage_kV << std::endl
             << "         feedback_signals.terminal_current_kA = " << feedback_signals.terminal_current_kA << std::endl
-            << "         feedback_signals.state_of_charge_pu  = " << feedback_signals.state_of_charge_pu << std::endl;
+            << "         feedback_signals.state_of_charge_pu  = " << feedback_signals.state_of_charge_pu << std::endl
+            << "         feedback_signals.isolation_status    = " << feedback_signals.isolation_status << std::endl;
     }
 
   } else {

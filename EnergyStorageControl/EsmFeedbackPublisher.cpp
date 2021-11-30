@@ -155,16 +155,26 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     EnergyStorageModule::FeedbackSignals feedback_signals;
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
 	feedback_signals.name = "P1";
-	feedback_signals.isolation_status = 1;
 	feedback_signals.terminal_voltage_kV = gtfpga[0];
 	feedback_signals.terminal_current_kA = gtfpga[1];
 	feedback_signals.state_of_charge_pu = gtfpga[2];
+    feedback_signals.isolation_status = gtfpga[3];
 
-    for (int i = 0; i < 100; ++i) {
+    while(1) {
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
+      /*if (gtfpga[3] == 1)
+      {
+
+      }
+      else 
+      {
+
+      }*/
+
 	  feedback_signals.terminal_voltage_kV = gtfpga[0];
 	  feedback_signals.terminal_current_kA = gtfpga[1];
 	  feedback_signals.state_of_charge_pu = gtfpga[2];
+      feedback_signals.isolation_status = gtfpga[3];
       usleep(500000);   //Not required for actual application
 
       if (error != DDS::RETCODE_OK) {
