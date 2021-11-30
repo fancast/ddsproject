@@ -18,6 +18,21 @@
 #include "EsmCommandSignalsTypeSupportImpl.h"
 #include <iostream>
 
+// included for fpga interface
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/mman.h>
+#include <cstring> // memcpy()
+#include <type_traits>
+
+#include "compiler-gcc.h"
+#include "gtfpga_helpers.hpp"
+#include "gtfpga.cpp"
+
+const off_t PCIE_ADDRESS = get_pci_base_addr();
+
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -138,6 +153,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Write samples
     EnergyStorageModule::CommandSignals command_signals;
+    auto gtfpga = Gtfpga(PCIE_ADDRESS);
 	command_signals.name = "P1";
 	command_signals.isolation_cmd = 1;
 
@@ -145,6 +161,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     while(1) {
       DDS::ReturnCode_t error = command_signals_writer->write(command_signals, DDS::HANDLE_NIL);
 
+      gtfpga[1] = command_signals.isolation_cmd;
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
                    ACE_TEXT("ERROR: %N:%l: main() -")
