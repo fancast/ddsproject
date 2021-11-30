@@ -160,7 +160,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     while(1) {
       DDS::ReturnCode_t error = command_signals_writer->write(command_signals, DDS::HANDLE_NIL);
 	  command_signals.sum = gtfpga[0];
-      usleep(500000);   //Not required for actual application
+      usleep(5000000);   //Not required for actual application
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,

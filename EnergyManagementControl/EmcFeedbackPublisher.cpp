@@ -155,14 +155,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     EnergyManagementControl::FeedbackSignals feedback_signals;
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
 	feedback_signals.name = "P1";
-	feedback_signals.signal_1 = 18;
-    feedback_signals.signal_2 = 25;
+	feedback_signals.signal_1 = 5;
+    feedback_signals.signal_2 = 6;
 
     while(1) {
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
+      feedback_signals.signal_1 = feedback_signals.signal_1 + 5;
+      feedback_signals.signal_2 = feedback_signals.signal_2 + 5;
       gtfpga[0] = static_cast<float>(feedback_signals.signal_1);
       gtfpga[1] = static_cast<float>(feedback_signals.signal_2);
-      usleep(500000);   //Not required for actual application
+      usleep(5000000);   //Not required for actual application
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
