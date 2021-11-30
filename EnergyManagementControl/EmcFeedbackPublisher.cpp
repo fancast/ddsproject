@@ -157,16 +157,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	feedback_signals.name = "P1";
 	feedback_signals.signal_1 = 18;
     feedback_signals.signal_2 = 25;
-    gtfpga[0] = feedback_signals.signal_1;
-    gtfpga[1] = feedback_signals.signal_2;
 
     while(1) {
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
-	  feedback_signals.signal_1 = gtfpga[0];
-      feedback_signals.signal_2 = gtfpga[1];
+      gtfpga[0] = static_cast<float>(feedback_signals.signal_1);
+      gtfpga[1] = static_cast<float>(feedback_signals.signal_2);
       usleep(500000);   //Not required for actual application
-      gtfpga[0] = feedback_signals.signal_1;
-      gtfpga[1] = feedback_signals.signal_2;
 
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
