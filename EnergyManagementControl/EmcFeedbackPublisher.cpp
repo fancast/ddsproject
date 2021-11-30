@@ -157,6 +157,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	feedback_signals.name = "P1";
 	feedback_signals.signal_1 = 5;
     feedback_signals.signal_2 = 6;
+    gtfpga[0] = static_cast<float>(feedback_signals.signal_1);
+    gtfpga[1] = static_cast<float>(feedback_signals.signal_2);
 
     while(1) {
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
