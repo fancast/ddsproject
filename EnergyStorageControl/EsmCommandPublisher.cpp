@@ -161,7 +161,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     while(1) {
       DDS::ReturnCode_t error = command_signals_writer->write(command_signals, DDS::HANDLE_NIL);
 
-      gtfpga[1] = static_cast<float> command_signals.isolation_cmd;
+      gtfpga[1] = static_cast<float> (command_signals.isolation_cmd);
       if (error != DDS::RETCODE_OK) {
         ACE_ERROR((LM_ERROR,
                    ACE_TEXT("ERROR: %N:%l: main() -")
