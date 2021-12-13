@@ -27,6 +27,9 @@
 #include <cstring> // memcpy()
 #include <type_traits>
 
+//include for clock
+#include <chrono>
+
 #include "compiler-gcc.h"
 #include "gtfpga_helpers.hpp"
 #include "gtfpga.cpp"
@@ -154,10 +157,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Write samples
     EnergyManagementControl::CommandSignals command_signals;
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
+    auto t_start = std::chrono::high_resolution_clock::now();
 	command_signals.name = "P1";
 	command_signals.sum = gtfpga[0];
+    auto t_end = std::chrono::high_resolution_clock::now();
+    double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
 
     while(1) {
+      t_start = std::chrono::high_resolution_clock::now();
       DDS::ReturnCode_t error = command_signals_writer->write(command_signals, DDS::HANDLE_NIL);
 	  command_signals.sum = gtfpga[0];
 
@@ -166,6 +173,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                    ACE_TEXT("ERROR: %N:%l: main() -")
                    ACE_TEXT(" write returned %d!\n"), error));
       }
+      t_end = std::chrono::high_resolution_clock::now();
+      elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
+      std::cout << "    Signal Round Trip Time (ms)    = " << elapsed_time_ms << std::endl;
     }
 
     // Wait for samples to be acknowledged
