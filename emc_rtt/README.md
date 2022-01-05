@@ -1,7 +1,8 @@
 # Energy Control Module
 
-This repository contains the minimal working example of an energy storage module
-that receives command signals and sends feedback signals.
+This repository contains the minimal working example of an energy management control
+that receives command signals and sends feedback signals. There are two feedback signals
+that are added together to produce the command signal.
 
 ## CMake
 There is an example `CMakeLists.txt` provided, but it can conflict with the
