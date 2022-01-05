@@ -159,6 +159,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Write samples
     EnergyManagementControl::FeedbackSignals feedback_signals;
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
+    auto clock_time = std::chrono::high_resolution_clock::now();
     //auto t_start = std::chrono::high_resolution_clock::now();
     ofstream rtt;
     rtt.open("rtt.txt");
@@ -172,7 +173,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     for (int i = 0; i < 1000; ++i) {
       //t_start = std::chrono::high_resolution_clock::now();
-      rtt << std::chrono::high_resolution_clock::now() << "\n";
+      clock_time = std::chrono::high_resolution_clock::now();
+      std::rtt << clock_time << "\n";
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
       feedback_signals.signal_1 = feedback_signals.signal_1 + 5;
       feedback_signals.signal_2 = feedback_signals.signal_2 + 5;
