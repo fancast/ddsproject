@@ -177,7 +177,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
       //t_end = std::chrono::high_resolution_clock::now();
       //elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
-      std::cout << "    Signal Round Trip Time (ms)    = " << elapsed_time_ms << std::endl;
+      //std::cout << "    Signal Round Trip Time (ms)    = " << elapsed_time_ms << std::endl;
     }
 
     // Wait for samples to be acknowledged

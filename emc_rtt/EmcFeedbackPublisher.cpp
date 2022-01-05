@@ -174,7 +174,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     for (int i = 0; i < 1000; ++i) {
       //t_start = std::chrono::high_resolution_clock::now();
       clock_time = std::chrono::high_resolution_clock::now();
-      std::rtt << clock_time << "\n";
+      rtt << clock_time << "\n";
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
       feedback_signals.signal_1 = feedback_signals.signal_1 + 5;
       feedback_signals.signal_2 = feedback_signals.signal_2 + 5;
