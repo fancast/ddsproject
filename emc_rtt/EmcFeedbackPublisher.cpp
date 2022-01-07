@@ -170,7 +170,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     auto t_end = std::chrono::high_resolution_clock::now();
     double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
 
-    for (int i = 0; i < 1000; ++i) {
+    for (int i = 0; i < 100000; ++i) {
       t_start = std::chrono::high_resolution_clock::now();
       //clock_time = std::chrono::system_clock::now();
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);

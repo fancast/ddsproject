@@ -165,7 +165,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     //auto t_end = std::chrono::high_resolution_clock::now();
     //double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
 
-    for (int i = 0; i < 1000; ++i) {
+    for (int i = 0; i < 100000; ++i) {
       //t_start = std::chrono::high_resolution_clock::now();
       DDS::ReturnCode_t error = command_signals_writer->write(command_signals, DDS::HANDLE_NIL);
 	  command_signals.sum = gtfpga[0];
