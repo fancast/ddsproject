@@ -19,7 +19,6 @@
 #include <iostream>
 // include for writing files
 #include <fstream>
-#include <format>
 
 // included for fpga interface
 #include <sys/types.h>
@@ -160,8 +159,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Write samples
     EnergyManagementControl::FeedbackSignals feedback_signals;
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
-    auto clock_time = std::chrono::system_clock::now();
-    //auto t_start = std::chrono::high_resolution_clock::now();
+    auto t_start = std::chrono::high_resolution_clock::now();
     ofstream rtt;
     rtt.open("rtt.txt");
 	feedback_signals.name = "P1";
@@ -169,15 +167,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     feedback_signals.signal_2 = 6.3;
     gtfpga[0] = static_cast<float>(feedback_signals.signal_1);
     gtfpga[1] = static_cast<float>(feedback_signals.signal_2);
-    //auto t_end = std::chrono::high_resolution_clock::now();
-    //double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
-    double formatted_time = std::format("{0:%T}", clock_time);
+    auto t_end = std::chrono::high_resolution_clock::now();
+    double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
 
     for (int i = 0; i < 1000; ++i) {
-      //t_start = std::chrono::high_resolution_clock::now();
-      clock_time = std::chrono::system_clock::now();
-      formatted_time = std::format("{0:%T}" , clock_time);
-      rtt << formatted_time << "\n";
+      t_start = std::chrono::high_resolution_clock::now();
+      //clock_time = std::chrono::system_clock::now();
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
       feedback_signals.signal_1 = feedback_signals.signal_1 + 5;
       feedback_signals.signal_2 = feedback_signals.signal_2 + 5;
@@ -189,11 +184,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                    ACE_TEXT("ERROR: %N:%l: main() -")
                    ACE_TEXT(" write returned %d!\n"), error));
       }
-      rtt.close();
-      //t_end = std::chrono::high_resolution_clock::now();
-      //elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
+      t_end = std::chrono::high_resolution_clock::now();
+      elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
+      rtt << elapsed_time_ms << "\n";
       //std::cout << "    Signal Round Trip Time (ms)    = " << elapsed_time_ms << std::endl;
     }
+    rtt.close();
 
     // Wait for samples to be acknowledged
     DDS::Duration_t timeout = { 30, 0 };
