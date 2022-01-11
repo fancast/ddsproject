@@ -186,7 +186,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
       //t_end = std::chrono::high_resolution_clock::now();
       //elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
-      rtt << std::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now().time_since_epoch()).count() << "\n";
+      rtt << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count() << "\n";
       //std::cout << "    Signal Round Trip Time (ms)    = " << elapsed_time_ms << std::endl;
     }
     rtt.close();
