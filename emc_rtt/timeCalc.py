@@ -8,5 +8,5 @@ for str_time in read_file:
 read_file.close()
 
 for pos in range(0,len(time_list)-1):
-    write_file.write(str(time_list[pos+1] - time_list[pos]))
+    write_file.write(str(time_list[pos+1] - time_list[pos]) + "\n")
 write_file.close()
