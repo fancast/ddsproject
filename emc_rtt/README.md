@@ -1,4 +1,4 @@
-# Energy Control Module
+# Minimal Energy Management Control
 
 This repository contains the minimal working example of an energy management control
 that receives command signals and sends feedback signals. There are two feedback signals
