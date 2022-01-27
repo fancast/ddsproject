@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 fb_read_file = open("rtt_feedback.txt", "r")
 fb_write_file = open("feedback_times.txt", "w")
 
@@ -23,3 +25,7 @@ cmd_read_file.close()
 for pos in range(0,len(cmd_time_list)-1):
     cmd_write_file.write(str(cmd_time_list[pos+1] - cmd_time_list[pos]) + "\n")
 cmd_write_file.close()
+
+fig, axs = plt.subplots(1,1, figsize(10,7), tight_layout=True)
+axs.hist(fb_time_list, bins=20)
+plt.show()
