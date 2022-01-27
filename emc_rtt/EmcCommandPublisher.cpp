@@ -160,12 +160,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     EnergyManagementControl::CommandSignals command_signals;
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
     //auto t_start = std::chrono::high_resolution_clock::now();
+    ofstream rtt;
+    rtt.open("rtt_command.txt");
 	command_signals.name = "P1";
 	command_signals.sum = gtfpga[0];
     //auto t_end = std::chrono::high_resolution_clock::now();
     //double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
 
-    for (int i = 0; i < 100000; ++i) {
+    for (int i = 0; i < 1000000; ++i) {
       //t_start = std::chrono::high_resolution_clock::now();
       DDS::ReturnCode_t error = command_signals_writer->write(command_signals, DDS::HANDLE_NIL);
 	  command_signals.sum = gtfpga[0];
@@ -178,7 +180,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       //t_end = std::chrono::high_resolution_clock::now();
       //elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
       //std::cout << "    Signal Round Trip Time (ms)    = " << elapsed_time_ms << std::endl;
+      rtt << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count() << "\n";
     }
+    rtt.close();
 
     // Wait for samples to be acknowledged
     DDS::Duration_t timeout = { 30, 0 };

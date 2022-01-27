@@ -161,7 +161,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
     //auto t_start = std::chrono::high_resolution_clock::now();
     ofstream rtt;
-    rtt.open("rtt.txt");
+    rtt.open("rtt_feedback.txt");
 	feedback_signals.name = "P1";
 	feedback_signals.signal_1 = 5.2;
     feedback_signals.signal_2 = 6.3;
@@ -170,7 +170,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     //auto t_end = std::chrono::high_resolution_clock::now();
     //double elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
 
-    for (int i = 0; i < 100000; ++i) {
+    for (int i = 0; i < 1000000; ++i) {
       //t_start = std::chrono::high_resolution_clock::now();
       //clock_time = std::chrono::system_clock::now();
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
