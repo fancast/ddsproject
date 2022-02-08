@@ -145,7 +145,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
 
       DDS::ConditionSeq conditions;
-      DDS::Duration_t timeout = DDS::DURATION_INFINITE_SEC;
+      DDS::Duration_t timeout = { DDS::DURATION_INFINITE_SEC, DDS::DURATION_INFINITE_NSEC };
       if (ws->wait(conditions, timeout) != DDS::RETCODE_OK) {
         ACE_ERROR_RETURN((LM_ERROR,
                           ACE_TEXT("ERROR: %N:%l: main() -")
@@ -185,7 +185,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     rtt.close();
 
     // Wait for samples to be acknowledged
-    DDS::Duration_t timeout = DDS::DURATION_INFINITE_SEC;
+    DDS::Duration_t timeout = { DDS::DURATION_INFINITE_SEC, DDS::DURATION_INFINITE_NSEC };
     if (command_signals_writer->wait_for_acknowledgments(timeout) != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT("ERROR: %N:%l: main() -")
