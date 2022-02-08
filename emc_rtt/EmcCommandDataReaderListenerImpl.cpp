@@ -56,8 +56,8 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
   DDS::ReturnCode_t error = reader_i->take_next_sample(command_signals, info);
 
   if (error == DDS::RETCODE_OK) {
-    std::cout << "SampleInfo.sample_rank = " << info.sample_rank << std::endl;
-    std::cout << "SampleInfo.instance_state = " << info.instance_state << std::endl;
+    //std::cout << "SampleInfo.sample_rank = " << info.sample_rank << std::endl;
+    //std::cout << "SampleInfo.instance_state = " << info.instance_state << std::endl;
 
     if (info.valid_data) {
             //std::cout << "         command_signals.name         = " << command_signals.name.in() << std::endl
