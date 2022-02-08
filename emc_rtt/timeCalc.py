@@ -26,6 +26,6 @@ for pos in range(0,len(cmd_time_list)-1):
     cmd_write_file.write(str(cmd_time_list[pos+1] - cmd_time_list[pos]) + "\n")
 cmd_write_file.close()
 
-fig, axs = plt.subplots(1,1, figsize(10,7), tight_layout=True)
+fig, axs = plt.subplots(1,1)
 axs.hist(fb_time_list, bins=20)
-plt.show()
+plt.show
