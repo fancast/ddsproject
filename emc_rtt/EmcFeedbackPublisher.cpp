@@ -145,7 +145,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
 
       DDS::ConditionSeq conditions;
-      DDS::Duration_t timeout = { 240, 0 };
+      DDS::Duration_t timeout = DDS::DURATION_INFINITE_SEC;
       if (ws->wait(conditions, timeout) != DDS::RETCODE_OK) {
         ACE_ERROR_RETURN((LM_ERROR,
                           ACE_TEXT("ERROR: %N:%l: main() -")
@@ -164,7 +164,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     rtt.open("rtt_feedback.txt");
 	feedback_signals.name = "P1";
 	feedback_signals.signal_1 = 1.0001;
-    feedback_signals.signal_2 = 1.0002;
+    feedback_signals.signal_2 = 2.0002;
     gtfpga[0] = static_cast<float>(feedback_signals.signal_1);
     gtfpga[1] = static_cast<float>(feedback_signals.signal_2);
     //auto t_end = std::chrono::high_resolution_clock::now();
@@ -192,7 +192,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     rtt.close();
 
     // Wait for samples to be acknowledged
-    DDS::Duration_t timeout = { 120, 0 };
+    DDS::Duration_t timeout = DDS::DURATION_INFINITE_SEC;
     if (feedback_signals_writer->wait_for_acknowledgments(timeout) != DDS::RETCODE_OK) {
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT("ERROR: %N:%l: main() -")
