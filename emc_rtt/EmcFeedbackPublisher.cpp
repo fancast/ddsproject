@@ -163,8 +163,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ofstream rtt;
     rtt.open("rtt_feedback.txt");
 	feedback_signals.name = "P1";
-	feedback_signals.signal_1 = 1.01;
-    feedback_signals.signal_2 = 1.02;
+	feedback_signals.signal_1 = 1.0001;
+    feedback_signals.signal_2 = 1.0002;
     gtfpga[0] = static_cast<float>(feedback_signals.signal_1);
     gtfpga[1] = static_cast<float>(feedback_signals.signal_2);
     //auto t_end = std::chrono::high_resolution_clock::now();
@@ -174,8 +174,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       //t_start = std::chrono::high_resolution_clock::now();
       //clock_time = std::chrono::system_clock::now();
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
-      feedback_signals.signal_1 = feedback_signals.signal_1 + 0.01;
-      feedback_signals.signal_2 = feedback_signals.signal_2 + 0.01;
+      feedback_signals.signal_1 = feedback_signals.signal_1 + 0.0001;
+      feedback_signals.signal_2 = feedback_signals.signal_2 + 0.0001;
       gtfpga[0] = static_cast<float>(feedback_signals.signal_1);
       gtfpga[1] = static_cast<float>(feedback_signals.signal_2);
 

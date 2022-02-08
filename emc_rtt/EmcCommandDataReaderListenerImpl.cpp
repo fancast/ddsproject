@@ -60,8 +60,8 @@ DataReaderListenerImpl::on_data_available(DDS::DataReader_ptr reader)
     std::cout << "SampleInfo.instance_state = " << info.instance_state << std::endl;
 
     if (info.valid_data) {
-            std::cout << "         command_signals.name         = " << command_signals.name.in() << std::endl
-            << "         command_signals.sum     = " << command_signals.sum << std::endl;
+            //std::cout << "         command_signals.name         = " << command_signals.name.in() << std::endl
+            //<< "         command_signals.sum     = " << command_signals.sum << std::endl;
     }
 
   } else {
