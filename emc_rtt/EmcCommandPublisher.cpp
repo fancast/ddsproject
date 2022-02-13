@@ -170,6 +170,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     while (true) {
       //t_start = std::chrono::high_resolution_clock::now();
       DDS::ReturnCode_t error = command_signals_writer->write(command_signals, DDS::HANDLE_NIL);
+      EnergyManagementControl::CommandSignals command_signals;
       command_signals.name = "P1";
 	  command_signals.sum = gtfpga[0];
 
