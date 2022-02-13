@@ -11,7 +11,7 @@ for str_time in fb_read_file:
 fb_read_file.close()
 
 for pos in range(0,len(fb_time_list)-1):
-    fb_calc_time[pos] = fb_time_list[pos+1] - fb_time_list[pos]
+    fb_calc_time.append(fb_time_list[pos+1] - fb_time_list[pos])
     fb_write_file.write(str(fb_calc_time[pos]) + "\n")
 fb_write_file.close()
 
@@ -26,10 +26,11 @@ for str_time in cmd_read_file:
 cmd_read_file.close()
 
 for pos in range(0,len(cmd_time_list)-1):
-    cmd_calc_time[pos] = cmd_time_list[pos+1] - cmd_time_list[pos]
+    cmd_calc_time.append(cmd_time_list[pos+1] - cmd_time_list[pos])
     cmd_write_file.write(str(cmd_calc_time[pos]) + "\n")
 cmd_write_file.close()
 
-fig, axs = plt.subplots(1,1)
-axs.hist(fb_calc_time, bins=20)
+#fig, axs = plt.subplots(1,1)
+plt.style.use('ggplot')
+plt.hist(fb_calc_time, bins=20)
 plt.show()

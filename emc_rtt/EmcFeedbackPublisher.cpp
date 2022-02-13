@@ -174,6 +174,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       //t_start = std::chrono::high_resolution_clock::now();
       //clock_time = std::chrono::system_clock::now();
       DDS::ReturnCode_t error = feedback_signals_writer->write(feedback_signals, DDS::HANDLE_NIL);
+      feedback_signals.name = "P1";
       feedback_signals.signal_1 = feedback_signals.signal_1 + 0.0001;
       feedback_signals.signal_2 = feedback_signals.signal_2 + 0.0001;
       gtfpga[0] = static_cast<float>(feedback_signals.signal_1);
