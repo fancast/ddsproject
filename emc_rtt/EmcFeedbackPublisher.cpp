@@ -101,9 +101,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
     // Create DataWriter
+    DDS::DataWriterQos writer_qos;
+    publisher->get_default_datawriter_qos(writer_qos);
+    writer_qos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
+    writer_qos.resource_limits.max_samples_per_instance = 1;
+
     DDS::DataWriter_var writer =
       publisher->create_datawriter(topic,
-                                   DATAWRITER_QOS_DEFAULT,
+                                   writer_qos,
                                    0,
                                    OpenDDS::DCPS::DEFAULT_STATUS_MASK);
 
