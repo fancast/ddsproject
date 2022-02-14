@@ -87,6 +87,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     DDS::DataReaderQos reader_qos;
     subscriber->get_default_datareader_qos(reader_qos);
     reader_qos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
+    reader_qos.resource_limits.max_samples_per_instance = 1;
 
     DDS::DataReader_var reader =
       subscriber->create_datareader(topic,
