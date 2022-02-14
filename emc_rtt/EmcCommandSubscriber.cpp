@@ -69,14 +69,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
     // Create Subscriber
-
-    DDS::SubscriberQos subscriber_qos;
-    topic->get_default_subscriber_qos(subscriber_qos);
-    subscriber_qos.reliability.kind = DDS::RELIABLE_RELIABILITY_QOS;
-    subscriber_qos.resource_limits.max_samples_per_instance = 1;
-
     DDS::Subscriber_var subscriber =
-      participant->create_subscriber(subscriber_qos,
+      participant->create_subscriber(SUBSCRIBER_QOS_DEFAULT,
                                      0,
                                      OpenDDS::DCPS::DEFAULT_STATUS_MASK);
 
