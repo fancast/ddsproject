@@ -1,0 +1,9 @@
+module EnergyManagementControl
+{
+	@topic
+	struct CommandSignals
+	{
+		@key string name;
+		float sum;
+	};
+};
