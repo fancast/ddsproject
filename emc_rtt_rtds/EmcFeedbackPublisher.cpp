@@ -18,7 +18,7 @@
 #include "EmcFeedbackSignalsTypeSupportImpl.h"
 #include <iostream>
 // include for writing files
-#include <fstream>
+//#include <fstream>
 
 // included for fpga interface
 #include <sys/types.h>
@@ -165,8 +165,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     EnergyManagementControl::FeedbackSignals feedback_signals;
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
     //auto t_start = std::chrono::high_resolution_clock::now();
-    ofstream rtt;
-    rtt.open("rtt_feedback.txt");
+    //ofstream rtt;
+    //rtt.open("rtt_feedback.txt");
 	feedback_signals.name = "P1";
 	feedback_signals.signal_1 = 1.0001;
     feedback_signals.signal_2 = 2.0002;
@@ -191,10 +191,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
       //t_end = std::chrono::high_resolution_clock::now();
       //elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
-      rtt << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count() << "\n";
+      //rtt << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count() << "\n";
       //std::cout << "    Signal Round Trip Time (ms)    = " << elapsed_time_ms << std::endl;
     }
-    rtt.close();
+    //rtt.close();
 
     // Wait for samples to be acknowledged
     DDS::Duration_t timeout = { DDS::DURATION_INFINITE_SEC, DDS::DURATION_INFINITE_NSEC };

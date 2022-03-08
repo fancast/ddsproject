@@ -17,6 +17,8 @@
 
 #include "EmcCommandSignalsTypeSupportImpl.h"
 #include <iostream>
+// include for writing files
+#include <fstream>
 
 // included for fpga interface
 #include <sys/types.h>
@@ -163,6 +165,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     EnergyManagementControl::CommandSignals command_signals;
 	auto gtfpga = Gtfpga(PCIE_ADDRESS);
     //auto t_start = std::chrono::high_resolution_clock::now();
+    ofstream rtt;
+    rtt.open("rtt_command.txt");
 	command_signals.name = "P1";
 	command_signals.sum = gtfpga[0];
     //auto t_end = std::chrono::high_resolution_clock::now();
@@ -181,7 +185,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       //t_end = std::chrono::high_resolution_clock::now();
       //elapsed_time_ms = std::chrono::duration<double, std::milli>(t_end - t_start).count();
       //std::cout << "    Signal Round Trip Time (ms)    = " << elapsed_time_ms << std::endl;
+      rtt << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count() << "\n";
     }
+    rtt.close();
 
     // Wait for samples to be acknowledged
     DDS::Duration_t timeout = { DDS::DURATION_INFINITE_SEC, DDS::DURATION_INFINITE_NSEC };
