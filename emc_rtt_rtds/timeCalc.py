@@ -3,9 +3,11 @@ import numpy as np
 
 cmd_read_file = open("rtt_command.txt", "r")
 cmd_write_file = open("command_times.txt", "w")
+write_file_numbered = open("numbered_cmd_times.txt", "w")
 
 cmd_time_list = []
 cmd_calc_time = []
+bins = []
 
 for str_time in cmd_read_file:
     cmd_time_list.append(int(str_time))
@@ -13,6 +15,9 @@ cmd_read_file.close()
 
 for pos in range(0,len(cmd_time_list)-1):
     cmd_calc_time.append(((cmd_time_list[pos+1] - cmd_time_list[pos])/1000))
+    write_file_numbered.write(str(pos) + ": " + str(cmd_calc_time[pos]) + "\n")
+    if cmd_calc_time[pos] > 50:
+        print(str(pos) + " " + str(cmd_calc_time[pos]))
     #cmd_write_file.write(str(cmd_calc_time[pos]) + "\n")
 
 # Get 99 percent of values
@@ -30,9 +35,12 @@ print("Total Trips: " + str(len(cmd_calc_time)))
 print("Average round trip time: " + str(avg_time) + " ms")
 print("Standard Deviation: " + str(sd_times))
 
+for x in np.arange(0,0.75, 0.025):
+    bins.append(x)
+
 plt.style.use('ggplot')
 #plt.hist(cmd_calc_time, bins=np.logspace(start=np.log10(10), stop=np.log10(15), num=10))
-plt.hist(cmd_calc_time, bins=20)
+plt.hist(cmd_calc_time, bins=bins)
 #plt.gca().set_xscale("log")
 plt.xlabel("Round Trip Time (ms)")
 plt.ylabel("Trip Count")
